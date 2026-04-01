@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@import "../shared/assets/fonts/font.css";
+
+:root {
+  --background: #ffffff;
+  --foreground: #2b2b2b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #1b1b1b;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Chiron";
+  font-weight: 300;
+}
+
+@theme {
+  /* Кастомные брейкпоинты (breakpoints) */
+  --breakpoint-320: 320px;
+  --breakpoint-480: 480px;
+  --breakpoint-768: 768px;
+  --breakpoint-1024: 1024px;
+  --breakpoint-1280: 1280px;
+  --breakpoint-1536: 1536px;
+
+  /* Кастомные цвета */
+  --color-green-be: #beff62;
+
+  --color-pink-d2: #d26666;
+
+  --color-green-33: #336916;
+
+  --color-orange-ff: #ffcb78;
+
+  --color-turquoise-63: #63b39c;
+
+  --color-gray-28: #282828;
+  --color-gray-3c: #3c3c3c;
+}
+
+@utility flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
