@@ -1,0 +1,14 @@
+.button {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+}
+
+.textForButton {
+  font-size: 24px;
+  font-weight: 400;
+  color: white;
+}

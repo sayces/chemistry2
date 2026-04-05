@@ -1,0 +1,46 @@
+@use "@/shared/styles/theme" as *;
+
+.calendarBg {
+  background-image: linear-gradient(
+    to bottom,
+    $color-calendar-column-e0 0%,
+    $color-calendar-column-bd 40%,
+    $color-for-each-column 100%
+  );
+}
+
+.mapBg {
+  background-image: linear-gradient(
+    to bottom,
+    $color-map-column-e1 0%,
+    $color-map-column-6e 40%,
+    $color-for-each-column 100%
+  );
+}
+
+.galleryBg {
+  background-image: linear-gradient(
+    to bottom,
+    $color-gallery-column-a4 0%,
+    $color-gallery-column-ffcb 40%,
+    $color-for-each-column 100%
+  );
+}
+
+.profileBg {
+  background-image: linear-gradient(
+    to bottom,
+    $color-profile-column-b5 0%,
+    $color-profile-column-50 40%,
+    $color-for-each-column 100%
+  );
+}
+
+.defaultBg {
+  background-image: linear-gradient(
+    to bottom,
+    $color-default-column-28 0%,
+    $color-default-column-3c 40%,
+    $color-for-each-column 100%
+  );
+}

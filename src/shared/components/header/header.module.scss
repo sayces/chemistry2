@@ -1,0 +1,22 @@
+.header {
+  display: grid;
+  grid-template-columns: 1fr 230px 1fr;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.title {
+  font-size: 31px;
+  font-weight: 700;
+  color: var(--color-green-be);
+  filter: drop-shadow(0 0 4px #ffffff50);
+}
