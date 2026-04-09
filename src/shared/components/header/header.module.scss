@@ -1,3 +1,5 @@
+@use "@/shared/styles/theme" as *;
+
 .header {
   display: grid;
   grid-template-columns: 1fr 230px 1fr;
@@ -14,9 +16,8 @@
   width: 100%;
 }
 
-.title {
-  font-size: 31px;
-  font-weight: 700;
-  color: var(--color-green-be);
+.logo {
   filter: drop-shadow(0 0 4px #ffffff50);
+  color: $color-green-be;
+  text-decoration-color: $color-green-be;
 }

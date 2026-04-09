@@ -1,12 +1,11 @@
-import Header from "../shared/components/header/Header";
+import HomeLayout from "@/pages/layout";
 
-const Home = () => {
+const App = () => {
   return (
-    <div className="flex flex-col justify-center items-center h-screen w-screen">
-      <Header />
-      <main className="flex flex-col justify-center items-center h-screen w-screen"></main>
-    </div>
+    <>
+      <HomeLayout />
+    </>
   );
 };
 
-export default Home;
+export default App;

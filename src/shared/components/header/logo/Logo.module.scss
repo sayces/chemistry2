@@ -1,0 +1,8 @@
+@use "@/shared/styles/theme" as *;
+
+.logo a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+}

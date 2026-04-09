@@ -1,22 +1,36 @@
+import Typography from "../typography/Typography";
+import styles from "./Link.module.scss";
+
 interface LinkProps {
-  text: string;
+  children: React.ReactNode;
   href: string;
   target?: "_blank" | "_self" | "_parent" | "_top";
   rel?: string;
   download?: string;
+  className?: string;
 }
 
-const Link = ({ text, href, target, rel, download }: LinkProps) => {
+const Link = ({
+  children,
+  href,
+  target,
+  rel,
+  download,
+  className,
+}: LinkProps) => {
+  const classNames = [className, styles.link].filter(Boolean).join(" ");
   return (
-    <a
-      href={href}
-      target={target}
-      rel={rel}
-      download={download}
-      className="flex justify-center items-center"
-    >
-      <p className="text-[24px] font-medium text-white">{text}</p>
-    </a>
+    <>
+      <a
+        href={href}
+        target={target}
+        rel={rel}
+        download={download}
+        className={classNames}
+      >
+        <Typography as="h1">{children}</Typography>
+      </a>
+    </>
   );
 };
 

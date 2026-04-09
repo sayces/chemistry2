@@ -1,14 +1,12 @@
+@use "@/shared/styles/mixins" as *;
+
 .button {
   cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-center;
   background-color: transparent;
   border: none;
 }
 
-.textForButton {
-  font-size: 24px;
+.label {
   font-weight: 400;
-  color: white;
 }

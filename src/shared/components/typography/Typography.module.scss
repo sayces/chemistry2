@@ -1,0 +1,19 @@
+@use '@/shared/styles/theme' as *;
+
+.typography {
+  font-size: inherit;
+  color: inherit;
+}
+
+.size-04 { font-size: 0.4rem; }
+.size-06 { font-size: 0.6rem; }
+.size-10 { font-size: 1rem; }
+.size-16 { font-size: 1.6rem; }
+.size-20 { font-size: 2rem; }
+.size-24 { font-size: 2.4rem; }
+.size-26 { font-size: 2.6rem; }
+.size-30 { font-size: 3rem; }
+
+.color-toxic { color: $color-green-be; }
+.color-white { color: #fff; }
+.color-black { color: #000; }
