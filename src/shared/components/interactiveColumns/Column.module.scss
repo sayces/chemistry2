@@ -1,11 +1,17 @@
 @use "@/shared/styles/theme" as *;
 
 .column {
-  width: 30px;
   height: 100vh;
-  cursor: pointer;
+  width: 100%;
   position: relative;
+  top: 0;
+  bottom: 0;
+  cursor: pointer;
   overflow: hidden;
+
+  @media (min-width: $breakpoint-768) {
+    width: 30px;
+  }
   background-image: linear-gradient(
     to bottom,
     $color-default-column-28 0%,
@@ -39,8 +45,8 @@
   &.mapBg::before {
     background-image: linear-gradient(
       to bottom,
-      $color-map-column-e1 0%,
-      $color-map-column-6e 40%,
+      $color-map-column-6e 0%,
+      $color-map-column-e1 40%,
       $color-for-each-column 100%
     );
   }
@@ -48,8 +54,8 @@
   &.galleryBg::before {
     background-image: linear-gradient(
       to bottom,
-      $color-gallery-column-a4 0%,
-      $color-gallery-column-ffcb 40%,
+      $color-gallery-column-ffcb 0%,
+      $color-gallery-column-a4 40%,
       $color-for-each-column 100%
     );
   }
@@ -57,8 +63,8 @@
   &.profileBg::before {
     background-image: linear-gradient(
       to bottom,
-      $color-profile-column-b5 0%,
-      $color-profile-column-50 40%,
+      $color-profile-column-50 0%,
+      $color-profile-column-b5 40%,
       $color-for-each-column 100%
     );
   }
