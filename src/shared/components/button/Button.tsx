@@ -14,6 +14,7 @@ interface ButtonProps {
   img?: string | any;
   children?: React.ReactNode;
   alt?: string;
+  style?: React.CSSProperties;
 }
 
 const Button = ({
@@ -27,6 +28,7 @@ const Button = ({
   img,
   children,
   alt,
+  style,
 }: ButtonProps) => {
 
   const onClickHandler = () => {
@@ -49,8 +51,9 @@ const Button = ({
       onMouseLeave={onMouseLeaveHandler}
       disabled={disabled}
       type={type}
+      style={style}
     >
-      {img && <Image src={img} alt={alt || ""} width={24} height={24} />}
+      {img && <Image src={img} alt={alt || ""} width={20} height={20} />}
       {text && <p className={styles.label}>{text}</p>}
       {children}
     </button>

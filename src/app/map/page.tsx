@@ -1,10 +1,15 @@
 import Header from "@/shared/components/header/Header";
+import Columns from "@/shared/components/interactiveColumns/Columns";
 import Main from "@/shared/components/main/Main";
 
-export const metadata = { title: "Map" };
-
 const MapPage = () => {
-  return <>Map</>;
+  return (
+    <>
+      <Header />
+      <Columns />
+      <Main>Map</Main>
+    </>
+  );
 };
 
 export default MapPage;

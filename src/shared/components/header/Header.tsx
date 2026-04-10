@@ -1,3 +1,5 @@
+"use client";
+
 import Navigation from "./navigation/Navigation";
 import Logo from "./logo/Logo";
 import styles from "./Header.module.scss";
@@ -5,10 +7,7 @@ import styles from "./Header.module.scss";
 const Header = () => {
   return (
     <header className={styles.header}>
-      <div className={styles.titleContainer}>
-        <Logo />
-      </div>
-
+      <Logo />
       <Navigation />
     </header>
   );

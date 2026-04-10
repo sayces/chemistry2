@@ -5,6 +5,10 @@
   @include flex-center;
   background-color: transparent;
   border: none;
+
+  img {
+    display: block;
+  }
 }
 
 .label {

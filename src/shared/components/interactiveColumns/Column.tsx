@@ -1,22 +1,25 @@
-import styles from "./columnsColors.module.scss";
-
-const classNames = {
-  column:
-    "w-[30px] h-screen transition-all duration-200 relative cursor-pointer",
-  defaultBg: styles.defaultBg,
-};
+import { useEffect, useState } from "react";
+import styles from "./Column.module.scss";
 
 interface ColumnProps {
   isActive?: boolean;
-  defaultColor: string;
-  onClick: () => void;
+  activeColor: string;
 }
 
-const Column = ({ isActive = false, defaultColor, onClick }: ColumnProps) => {
+const Column = ({ isActive = false, activeColor }: ColumnProps) => {
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShouldAnimate(isActive);
+    }, isActive ? 0 : 50);
+
+    return () => clearTimeout(timer);
+  }, [isActive]);
+
   return (
     <div
-      onClick={onClick}
-      className={`${classNames.column} ${isActive ? defaultColor : styles.defaultBg}`}
+      className={`${styles.column} ${activeColor} ${shouldAnimate ? styles.active : ""}`}
     ></div>
   );
 };

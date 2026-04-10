@@ -1,17 +1,30 @@
-import Link from "@/shared/components/link/Link";
-import Button from "@/shared/components/button/Button";
+"use client";
+
+import Link from "next/link";
 import Typography from "@/shared/components/typography/Typography";
+import { usePathname } from "next/navigation";
+import { useNavigationStore, navItems } from "@/shared/store/useNavigationStore";
 import styles from "./Logo.module.scss";
 
 const Logo = () => {
+  const pathname = usePathname();
+  const { hoveredItemId } = useNavigationStore();
+
+  const isHomePage = pathname === "/";
+  const activeNavId =
+    hoveredItemId ||
+    navItems.find((item) => item.href === pathname)?.id;
+
+  const logoClassName = activeNavId && !isHomePage
+    ? styles[`color-${activeNavId}`]
+    : "";
+
   return (
     <div className={styles.logo}>
       <Link href="/">
-        <Button text="">
-          <Typography as="h1" size="30" color="toxic">
-            Chemistry
-          </Typography>
-        </Button>
+        <Typography as="h1" size="30" className={logoClassName}>
+          Chemistry
+        </Typography>
       </Link>
     </div>
   );

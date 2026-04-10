@@ -1,23 +1,23 @@
 @use "@/shared/styles/theme" as *;
 
 .header {
-  display: grid;
-  grid-template-columns: 1fr 230px 1fr;
-  justify-content: space-between;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: flex-start;
   align-items: baseline;
   width: 100%;
   margin-top: 40px;
-}
-
-.titleContainer {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
+  padding-left: 20px;
 }
 
 .logo {
-  filter: drop-shadow(0 0 4px #ffffff50);
-  color: $color-green-be;
-  text-decoration-color: $color-green-be;
+  filter: drop-shadow(0 0 2px #ffffff50);
+  transition: filter 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  a {
+    text-decoration: none;
+    color: $color-green-be;
+    transition: color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
 }

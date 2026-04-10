@@ -2,7 +2,40 @@
 
 .logo a {
   text-decoration: none;
+  color: $color-green-be;
+  filter: drop-shadow(0 0 2px #ffffff50);
+  transition: color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+              filter 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+
   &:hover {
     text-decoration: none;
   }
+}
+
+.color-calendar {
+  color: $color-calendar-column-e0;
+  filter: drop-shadow(0 0 2px #e06161);
+  transition: color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+              filter 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.color-map {
+  color: $color-map-column-e1;
+  filter: drop-shadow(0 0 2px #e1ffd8);
+  transition: color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+              filter 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.color-gallery {
+  color: $color-gallery-column-a4;
+  filter: drop-shadow(0 0 2px #a4678c);
+  transition: color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+              filter 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.color-profile {
+  color: $color-profile-column-b5;
+  filter: drop-shadow(0 0 2px #b5b5b5);
+  transition: color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+              filter 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }

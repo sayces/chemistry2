@@ -1,13 +1,11 @@
+import styles from "./Main.module.scss";
+
 interface MainProps {
   children: React.ReactNode;
 }
 
 const Main = ({ children }: MainProps) => {
-  return (
-    <main className="flex flex-col justify-center items-center h-screen w-screen">
-      {children}
-    </main>
-  );
+  return <main className={styles.main}>{children}</main>;
 };
 
 export default Main;
