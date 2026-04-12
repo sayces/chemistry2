@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 import Column from "./Column";
 import { useNavigationStore, navItems } from "@/shared/store/useNavigationStore";
 import containerStyles from "./Columns.module.scss";
@@ -8,7 +9,7 @@ import styles from "./Column.module.scss";
 
 const Columns = () => {
   const pathname = usePathname();
-  const { hoveredItemId } = useNavigationStore();
+  const { hoveredItemId, previousActiveItemId, setCurrentActiveItemId } = useNavigationStore();
 
   const getActiveColumnIndex = (): number => {
     const pageIndex = navItems.findIndex((item) => item.href === pathname);
@@ -21,7 +22,15 @@ const Columns = () => {
     return -1;
   };
 
-  const activeIndex = getActiveColumnIndex();
+  const currentActiveIndex = getActiveColumnIndex();
+
+  useEffect(() => {
+    // Track current active item to enable revert animation
+    if (currentActiveIndex !== -1) {
+      const currentItem = navItems[currentActiveIndex];
+      setCurrentActiveItemId(currentItem.id);
+    }
+  }, [pathname, currentActiveIndex]);
 
   const activeColorMap: Record<string, string> = {
     calendar: styles.calendarBg,
@@ -33,13 +42,19 @@ const Columns = () => {
   return (
     <div className={containerStyles.columnsContainer}>
       <div className={containerStyles.columnsInner}>
-        {navItems.map((item, index) => (
-          <Column
-            key={`${item.id}-${pathname}`}
-            activeColor={activeColorMap[item.id]}
-            isActive={index === activeIndex}
-          />
-        ))}
+        {navItems.map((item, index) => {
+          const isActive = index === currentActiveIndex;
+          const isPrevious = item.id === previousActiveItemId && !isActive;
+          
+          return (
+            <Column
+              key={item.id}
+              activeColor={activeColorMap[item.id]}
+              isActive={isActive}
+              isPreviousActive={isPrevious}
+            />
+          );
+        })}
       </div>
     </div>
   );

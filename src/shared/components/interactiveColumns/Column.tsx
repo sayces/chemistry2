@@ -4,22 +4,31 @@ import styles from "./Column.module.scss";
 interface ColumnProps {
   isActive?: boolean;
   activeColor: string;
+  isPreviousActive?: boolean;
 }
 
-const Column = ({ isActive = false, activeColor }: ColumnProps) => {
-  const [shouldAnimate, setShouldAnimate] = useState(false);
+const Column = ({ isActive = false, activeColor, isPreviousActive = false }: ColumnProps) => {
+  const [animationState, setAnimationState] = useState<"idle" | "active" | "reverting">("idle");
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShouldAnimate(isActive);
-    }, isActive ? 0 : 50);
-
-    return () => clearTimeout(timer);
-  }, [isActive]);
+    if (isActive) {
+      setAnimationState("active");
+    } else if (isPreviousActive) {
+      setAnimationState("reverting");
+      
+      const revertTimer = setTimeout(() => {
+        setAnimationState("idle");
+      }, 500);
+      
+      return () => clearTimeout(revertTimer);
+    } else {
+      setAnimationState("idle");
+    }
+  }, [isActive, isPreviousActive]);
 
   return (
     <div
-      className={`${styles.column} ${activeColor} ${shouldAnimate ? styles.active : ""}`}
+      className={`${styles.column} ${activeColor} ${animationState === "active" ? styles.active : ""} ${animationState === "reverting" ? styles.reverting : ""}`}
     ></div>
   );
 };
