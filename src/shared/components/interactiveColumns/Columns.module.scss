@@ -1,3 +1,4 @@
+@use "@/shared/styles/variables" as *;
 @use "@/shared/styles/theme" as *;
 
 .columnsContainer {
@@ -12,17 +13,19 @@
 }
 
 .columnsInner {
+  --column-unit: #{$column-unit};
+  --columns-count: #{$columns-count};
+
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 5rem;
-  width: 35rem;
+  gap: var(--column-unit);
+  width: calc(var(--column-unit) * var(--columns-count) * 2 - var(--column-unit));
   position: relative;
   height: 100vh;
   height: -webkit-fill-available;
 
   @media (min-width: $breakpoint-768) {
-    gap: 3rem;
-    width: 21rem;
+    --column-unit: #{$column-unit-md};
   }
 }

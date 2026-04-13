@@ -3,7 +3,7 @@
 .logo a {
   text-decoration: none;
   color: $color-green-be;
-  filter: drop-shadow(0 0 2px #ffffff50);
+  filter: drop-shadow(0 0 2px #ffffff30);
   transition: color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
               filter 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 
@@ -14,28 +14,28 @@
 
 .color-calendar {
   color: $color-calendar-column-e0;
-  filter: drop-shadow(0 0 2px #e06161);
+  filter: drop-shadow(0 0 2px #e0616130);
   transition: color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
               filter 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .color-map {
   color: $color-map-column-e1;
-  filter: drop-shadow(0 0 2px #e1ffd8);
+  filter: drop-shadow(0 0 2px #e1ffd830);
   transition: color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
               filter 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .color-gallery {
   color: $color-gallery-column-a4;
-  filter: drop-shadow(0 0 2px #a4678c);
+  filter: drop-shadow(0 0 2px #a4678c30);
   transition: color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
               filter 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .color-profile {
   color: $color-profile-column-b5;
-  filter: drop-shadow(0 0 2px #b5b5b5);
+  filter: drop-shadow(0 0 2px #b5b5b530);
   transition: color 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
               filter 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
