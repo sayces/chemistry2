@@ -12,31 +12,31 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 50px;
-  width: 350px;
+  gap: 5rem;
+  width: 35rem;
 
   @media (min-width: $breakpoint-768) {
-    gap: 30px;
-    width: 210px;
+    gap: 3rem;
+    width: 21rem;
   }
 }
 
 .navItem {
-  width: 50px;
-  height: 50px;
+  width: 5rem;
+  height: 5rem;
   display: flex;
   justify-content: center;
   align-items: end;
   flex-shrink: 0;
 
   @media (min-width: $breakpoint-768) {
-    width: 30px;
-    height: 30px;
+    width: 3rem;
+    height: 3rem;
   }
 }
 
 .navButton {
-  filter: drop-shadow(0 0 2px #ffffff50);
+  filter: drop-shadow(0 0 0.2rem #ffffff50);
   transition: all 0.2s;
   cursor: pointer;
 
@@ -53,12 +53,12 @@
   }
 
   img {
-    width: 30px;
-    height: 30px;
+    width: 3rem;
+    height: 3rem;
 
     @media (min-width: $breakpoint-768) {
-      width: 24px;
-      height: 24px;
+      width: 2.4rem;
+      height: 2.4rem;
     }
   }
 }
