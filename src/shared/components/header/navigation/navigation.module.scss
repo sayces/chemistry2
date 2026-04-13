@@ -1,3 +1,4 @@
+@use "@/shared/styles/variables" as *;
 @use "@/shared/styles/theme" as *;
 
 .nav {
@@ -12,31 +13,31 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 5rem;
-  width: 35rem;
+  gap: $column-unit;
+  width: calc($column-unit * $columns-count * 2 - $column-unit);
 
-  @media (min-width: $breakpoint-768) {
-    gap: 3rem;
-    width: 21rem;
+  @media (max-width: $breakpoint-768) {
+    gap: $column-unit-md;
+    width: calc($column-unit-md * $columns-count * 2 - $column-unit-md);
   }
 }
 
 .navItem {
-  width: 5rem;
-  height: 5rem;
+  width: $column-unit;
+  height: $column-unit;
   display: flex;
   justify-content: center;
   align-items: end;
   flex-shrink: 0;
 
-  @media (min-width: $breakpoint-768) {
-    width: 3rem;
-    height: 3rem;
+  @media (max-width: $breakpoint-768) {
+    width: $column-unit-md;
+    height: $column-unit-md;
   }
 }
 
 .navButton {
-  filter: drop-shadow(0 0 0.2rem #ffffff50);
+  filter: drop-shadow(0 0 2px #ffffff30);
   transition: all 0.2s;
   cursor: pointer;
 
@@ -53,12 +54,12 @@
   }
 
   img {
-    width: 3rem;
-    height: 3rem;
+    width: 2.4rem;
+    height: 2.4rem;
 
-    @media (min-width: $breakpoint-768) {
-      width: 2.4rem;
-      height: 2.4rem;
+    @media (max-width: $breakpoint-768) {
+      width: 2.6rem;
+      height: 2.6rem;
     }
   }
 }

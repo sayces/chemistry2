@@ -25,7 +25,7 @@
   height: 100vh;
   height: -webkit-fill-available;
 
-  @media (min-width: $breakpoint-768) {
+  @media (max-width: $breakpoint-768) {
     --column-unit: #{$column-unit-md};
   }
 }
