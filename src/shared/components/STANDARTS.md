@@ -34,7 +34,9 @@ Components follow a layered architecture inspired by Feature-Sliced Design:
 src/
 ├── shared/           # Reusable primitives
 │   └── components/   # UI components (Button, Typography, etc.)
-├── widgets/          # Composite components (NavigationColumns)
+├── widgets/          # Composite components
+├── features/         # User-facing functional
+├── entities/         # Business entities
 ├── pages/            # Page-level components
 └── app/              # Next.js App Router
 ```
@@ -42,7 +44,7 @@ src/
 ### Dependency Flow
 
 ```
-App → Pages → Widgets → Shared Components
+1.App → 2.Pages → 3.Widgets → 4.Features → 5.Entities → 6.Shared Components
 ```
 
 **Rules:**
@@ -62,7 +64,7 @@ Each component should have its own folder with the following structure:
 src/shared/components/ComponentName/
 ├── ComponentName.tsx          # Component implementation
 ├── ComponentName.module.scss  # Component styles
-├── DOCUMENTATION.md           # Component documentation
+├── DOCS.md                    # Component documentation
 └── index.ts                   # Re-export (optional)
 ```
 
@@ -72,7 +74,7 @@ src/shared/components/ComponentName/
 src/shared/components/button/
 ├── Button.tsx
 ├── Button.module.scss
-├── DOCUMENTATION.md
+├── DOCS.md
 └── index.ts
 ```
 

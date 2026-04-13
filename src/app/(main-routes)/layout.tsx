@@ -1,15 +1,16 @@
+"use client";
+
 import Header from "@/shared/components/header/Header";
 import Columns from "@/shared/components/interactiveColumns/Columns";
-import Main from "@/shared/components/main/Main";
 
-const CalendarPage = () => {
+const MainRoutesLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Header />
       <Columns />
-      <Main>Calendar</Main>
+      {children}
     </>
   );
 };
 
-export default CalendarPage;
+export default MainRoutesLayout;

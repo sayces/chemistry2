@@ -11,7 +11,7 @@ interface ButtonProps {
   disabled?: boolean;
   className?: string;
   type?: "button" | "submit" | "reset";
-  img?: string | any;
+  img?: string;
   children?: React.ReactNode;
   alt?: string;
   style?: React.CSSProperties;
