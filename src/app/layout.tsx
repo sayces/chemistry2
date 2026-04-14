@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "@/shared/styles/index.scss";
 import { Manrope } from "next/font/google";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 const manrope = Manrope({subsets:['latin'],variable:'--font-sans'});
 
