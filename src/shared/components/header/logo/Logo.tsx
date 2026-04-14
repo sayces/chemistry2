@@ -6,7 +6,11 @@ import { usePathname } from "next/navigation";
 import { useNavigationStore, navItems } from "@/shared/store/useNavigationStore";
 import styles from "./Logo.module.scss";
 
-const Logo = () => {
+interface LogoProps {
+  className?: string;
+}
+
+const Logo = ({className}: LogoProps) => {
   const pathname = usePathname();
   const { hoveredItemId } = useNavigationStore();
 
@@ -15,14 +19,14 @@ const Logo = () => {
     hoveredItemId ||
     navItems.find((item) => item.href === pathname)?.id;
 
-  const logoClassName = activeNavId && !isHomePage
+  const logoTypo = activeNavId && !isHomePage
     ? styles[`color-${activeNavId}`]
     : "";
 
   return (
-    <div className={styles.logo}>
-      <Link href="/">
-        <Typography as="h1" size="30" className={logoClassName}>
+    <div className={`${styles.logo} ${className}`}>
+      <Link href="/" >
+        <Typography as="h1" size="30" className={logoTypo}>
           Chemistry
         </Typography>
       </Link>
