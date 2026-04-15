@@ -24,7 +24,7 @@ const Logo = ({className}: LogoProps) => {
     : "";
 
   return (
-    <div className={`${styles.logo} ${className}`}>
+    <div className={`${styles.logo} ${className || ""}`}>
       <Link href="/" >
         <Typography as="h1" size="30" className={logoTypo}>
           Chemistry

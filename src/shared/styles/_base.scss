@@ -1,3 +1,4 @@
+@use "variables" as *;
 @use "theme" as *;
 
 *,
@@ -20,6 +21,9 @@ html {
 }
 
 body {
+  --column-unit: #{$column-unit};
+  --columns-count: #{$columns-count};
+
   min-height: 100%;
   min-height: 100dvh;
   min-height: -webkit-fill-available;
@@ -35,7 +39,11 @@ body {
     sans-serif;
   font-weight: 300;
   font-size: 1rem;
-  overflow-x: hidden;
+  overflow: hidden;
+
+  @media (min-width: $breakpoint-768) {
+    --column-unit: #{$column-unit-md};
+  }
 }
 
 // ============================================

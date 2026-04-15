@@ -1,0 +1,62 @@
+.calendar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  backdrop-filter: none;
+  z-index: 1;
+  pointer-events: auto;
+
+  & :global([data-slot="calendar"]) {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    background: transparent;
+  }
+
+  // Hide internal navigation arrows
+  & :global(.rdp-nav) {
+    display: none;
+  }
+}
+
+.calendarsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  z-index: 5;
+}
+
+.monthCalendars {
+  display: flex;
+  gap: var(--column-unit);
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.navButton {
+  width: 100%;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.2rem;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 5;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}

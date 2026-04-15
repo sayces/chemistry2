@@ -1,39 +1,30 @@
-@use "@/shared/styles/variables" as *;
 @use "@/shared/styles/theme" as *;
 
 .nav {
-  position: absolute;
+  position: fixed;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
+  left: 0;
+  right: 0;
+  z-index: 20;
   display: flex;
   justify-content: center;
   align-items: center;
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: $column-unit;
-  width: calc($column-unit * $columns-count * 2 - $column-unit);
-
-  @media (max-width: $breakpoint-768) {
-    gap: $column-unit-md;
-    width: calc($column-unit-md * $columns-count * 2 - $column-unit-md);
-  }
+  gap: var(--column-unit);
+  width: calc(var(--column-unit) * var(--columns-count) * 2 - var(--column-unit));
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .navItem {
-  width: $column-unit;
-  height: $column-unit;
+  width: var(--column-unit);
+  height: var(--column-unit);
   display: flex;
   justify-content: center;
   align-items: end;
   flex-shrink: 0;
-
-  @media (max-width: $breakpoint-768) {
-    width: $column-unit-md;
-    height: $column-unit-md;
-  }
 }
 
 .navButton {

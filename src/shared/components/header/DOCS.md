@@ -114,7 +114,6 @@ To customize the header appearance:
 ## Future Enhancements
 
 Potential improvements:
-- Add mobile responsive hamburger menu
 - Add sticky header functionality
 - Add search bar integration
 - Add user profile dropdown

@@ -2,20 +2,19 @@
 @use "@/shared/styles/theme" as *;
 
 .columnsContainer {
-  position: absolute;
+  position: fixed;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
   pointer-events: none;
-  z-index: -10;
+  z-index: 0;
   height: 100vh;
-  height: -webkit-fill-available;
+  height: 100dvh;
 }
 
 .columnsInner {
-  --column-unit: #{$column-unit};
-  --columns-count: #{$columns-count};
-
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -23,9 +22,5 @@
   width: calc(var(--column-unit) * var(--columns-count) * 2 - var(--column-unit));
   position: relative;
   height: 100vh;
-  height: -webkit-fill-available;
-
-  @media (max-width: $breakpoint-768) {
-    --column-unit: #{$column-unit-md};
-  }
+  height: 100dvh;
 }

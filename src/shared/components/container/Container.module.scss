@@ -1,0 +1,12 @@
+@use "@/shared/styles/theme" as *;
+
+.container {
+  width: 100%;
+  max-width: calc(var(--column-unit) * var(--columns-count) * 2 - var(--column-unit));
+  margin: 0 auto;
+}
+
+.containerWithPadding {
+  @extend .container;
+  padding: 0 var(--column-unit);
+}
