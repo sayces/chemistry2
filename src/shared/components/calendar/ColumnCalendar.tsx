@@ -112,7 +112,6 @@ const ColumnCalendar = () => {
                 onSelect={(date) => handleDateSelect(cal.id, date)}
                 defaultMonth={new Date(cal.year, cal.month)}
                 captionLayout="dropdown"
-                locale={typeof navigator !== 'undefined' ? navigator.language : 'en-US'}
                 className="w-full backdrop-blur-xs bg-transparent relative"
               />
             </div>
