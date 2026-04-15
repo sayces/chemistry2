@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from "react";
 import { Calendar } from "@/shared/shadcn/ui/calendar";
 import Container from "../container/Container";
 import styles from './Calendar.module.scss';
+import { ru } from "date-fns/locale";
 
 interface MonthCalendar {
   id: string;
@@ -12,7 +13,7 @@ interface MonthCalendar {
   selectedDate: Date | undefined;
 }
 
-const ColumnCalendar = () => {
+const CalendarContainer = () => {
   const [calendars, setCalendars] = useState<MonthCalendar[]>([]);
   const [mounted, setMounted] = useState(false);
 
@@ -111,7 +112,8 @@ const ColumnCalendar = () => {
                 selected={cal.selectedDate}
                 onSelect={(date) => handleDateSelect(cal.id, date)}
                 defaultMonth={new Date(cal.year, cal.month)}
-                captionLayout="dropdown"
+                captionLayout="label"
+                locale={ru}
                 className="w-full backdrop-blur-xs bg-transparent relative"
               />
             </div>
@@ -130,4 +132,4 @@ const ColumnCalendar = () => {
   );
 };
 
-export default ColumnCalendar;
+export default CalendarContainer;

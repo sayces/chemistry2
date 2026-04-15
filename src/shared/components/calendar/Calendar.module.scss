@@ -18,6 +18,38 @@
   & :global(.rdp-nav) {
     display: none;
   }
+
+  // Month caption container with rounded background
+  & :global(.rdp-month_caption),
+  & :global(.rdp-caption_label) {
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 0.8rem;
+    padding: 0.5rem 1rem;
+    font-weight: 400 !important;
+    backdrop-filter: blur(4px);
+    font-size: 1.5rem;
+  }
+
+  // Chevron icons in calendar
+  & :global(.rdp-chevron),
+  & :global([data-slot="calendar"]) svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  // Weekday names (Mon, Tue, etc.)
+  & :global(.rdp-weekday) {
+    font-size: 1.2rem;
+    font-weight: 200;
+  }
+
+  // Calendar day numbers
+  & :global(.rdp-day_button),
+  & :global([data-day]) {
+    font-size: 1rem;
+    font-weight: 300;
+    mix-blend-mode: difference;
+  }
 }
 
 .calendarsWrapper {

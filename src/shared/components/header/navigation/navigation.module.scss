@@ -47,10 +47,5 @@
   img {
     width: 2.4rem;
     height: 2.4rem;
-
-    @media (max-width: $breakpoint-768) {
-      width: 2.6rem;
-      height: 2.6rem;
-    }
   }
 }
