@@ -5,13 +5,13 @@
         "id": "qwen/qwen3.5-9b",
         "name": "qwen/qwen3.5-9b",
         "baseUrl": "http://127.0.0.1:1234/v1",
-        "description": "Qwen 3 local",
+        "description": "Qwen local",
         "envKey": "LM_KEY"
       }
     ]
   },
   "env": {
-    "LM_KEY": "sk-lm-Jzs9LZAE:0n6E4IIAsq2suaZnHwPP"
+    "LM_KEY": "sk-lm-sl0ntAyv:RtIikJ1hVOQMDu7CgJ9l"
   },
   "security": {
     "auth": {
@@ -70,6 +70,5 @@
       "Bash(npm ls *)",
       "Bash(del *)"
     ]
-  },
-  "fastModel": "qwen/qwen3.5-9b"
+  }
 }
