@@ -1,4 +1,43 @@
 {
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "qwen/qwen3.5-9b",
+        "name": "qwen/qwen3.5-9b",
+        "baseUrl": "http://127.0.0.1:1234/v1",
+        "description": "Qwen 3 local",
+        "envKey": "LM_KEY"
+      }
+    ]
+  },
+  "env": {
+    "LM_KEY": "sk-lm-Jzs9LZAE:0n6E4IIAsq2suaZnHwPP"
+  },
+  "security": {
+    "auth": {
+      "selectedType": "openai"
+    }
+  },
+  "model": {
+    "name": "qwen/qwen3.5-9b"
+  },
+  "general": {
+    "language": "ru",
+    "vimMode": false,
+    "preferredEditor": "vscode"
+  },
+  "ui": {
+    "theme": "GitHub",
+    "feedbackLastShownTimestamp": 1776247667241
+  },
+  "tools": {
+    "shell": {
+      "enableInteractiveShell": true
+    }
+  },
+  "ide": {
+    "enabled": true
+  },
   "mcpServers": {
     "context7": {
       "httpUrl": "https://mcp.context7.com/mcp",
@@ -18,8 +57,19 @@
   "$version": 3,
   "permissions": {
     "allow": [
-      "Bash(type *)",
-      "Bash(dir *)"
+      "Bash(npm run *)",
+      "Bash(rmdir *)",
+      "Bash(rm *)",
+      "Bash(move *)",
+      "Bash(mv *)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_run_code",
+      "Bash(npx *)",
+      "Bash(findstr *)",
+      "Bash(npm ls *)",
+      "Bash(del *)"
     ]
-  }
+  },
+  "fastModel": "qwen/qwen3.5-9b"
 }

@@ -93,6 +93,8 @@ const CalendarContainer = () => {
     );
   }
 
+  const weekDays = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
+
   return (
     <Container variant="default">
       <div className={styles.calendarsWrapper}>
@@ -103,6 +105,12 @@ const CalendarContainer = () => {
         >
           ← Предыдущие месяца
         </button>
+
+        <div className={styles.weekDaysHeader}>
+          {weekDays.map((day) => (
+            <span key={day} className={styles.weekDay}>{day}</span>
+          ))}
+        </div>
 
         <div className={styles.monthCalendars}>
           {calendars.map(cal => (
@@ -115,6 +123,9 @@ const CalendarContainer = () => {
                 captionLayout="label"
                 locale={ru}
                 className="w-full backdrop-blur-xs bg-transparent relative"
+                classNames={{
+                  weekdays: "hidden",
+                }}
               />
             </div>
           ))}

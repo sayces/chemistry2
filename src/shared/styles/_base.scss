@@ -21,7 +21,7 @@ html {
   height: -webkit-fill-available;
 
   // Desktop: 1rem = 14px
-  @media (min-width: 769px) {
+  @media (min-width: $breakpoint-768) {
     font-size: 14px;
   }
 }
@@ -46,10 +46,6 @@ body {
   font-weight: 300;
   font-size: 1rem;
   overflow: hidden;
-
-  @media (min-width: $breakpoint-768) {
-    --column-unit: #{$column-unit-md};
-  }
 }
 
 // ============================================

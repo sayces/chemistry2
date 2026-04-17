@@ -19,15 +19,31 @@
     display: none;
   }
 
-  // Month caption container with rounded background
-  & :global(.rdp-month_caption),
-  & :global(.rdp-caption_label) {
-    background: rgba(0, 0, 0, 0.03);
+  // Month caption container - separate visual entity
+  & :global(.rdp-month_caption) {
+    background: rgba(255, 255, 255, 0.08);
+    width: 15rem;
     border-radius: 0.8rem;
-    padding: 0.5rem 1rem;
-    font-weight: 400 !important;
+    padding: 0.5rem 0.1rem;
+    font-weight: 400;
+    font-size: 1rem;
+    margin: 0.5rem auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  & :global(.rdp-caption_label) {
+    font-weight: 400;
+    font-size: 1.2rem;
+  }
+
+  & :global([data-slot="calendar"]) {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 1rem;
     backdrop-filter: blur(4px);
-    font-size: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   // Chevron icons in calendar
@@ -39,15 +55,48 @@
 
   // Weekday names (Mon, Tue, etc.)
   & :global(.rdp-weekday) {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 200;
   }
 
   // Calendar day numbers
+  & :global(.rdp-day) {
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
   & :global(.rdp-day_button),
   & :global([data-day]) {
     font-size: 1rem;
-    font-weight: 300;
+    font-weight: 400;
+  }
+
+  & :global(.rdp-day)[data-selected="true"] {
+    box-shadow:
+      inset 0 0 0 1px #00000050,
+      0 0 6px rgba(0, 0, 0, 0.8),
+      0 0 12px rgba(0, 0, 0, 0.8);
+    mix-blend-mode: difference;
+    backdrop-filter: blur(8px);
+    animation: bubblePulse 0.2s ease-in-out forwards;
+  }
+
+  @keyframes bubblePulse {
+    0%, 100% {
+      box-shadow:
+        inset 0 0 0 1px #00000050,
+        0 0 6px rgba(0, 0, 0, 0.8),
+        0 0 12px rgba(0, 0, 0, 0.8);
+    }
+    50% {
+      box-shadow:
+        inset 0 0 0 2px #00000030,
+        0 0 12px rgba(0, 0, 0, 0.6),
+        0 0 24px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  & :global(.rdp-day_button span) {
     mix-blend-mode: difference;
   }
 }
@@ -60,6 +109,24 @@
   width: 100%;
   position: relative;
   z-index: 5;
+}
+
+.weekDaysHeader {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  flex-wrap: nowrap;
+  margin: 1rem 0;
+}
+
+.weekDay {
+  font-size: 1rem;
+  font-weight: 200;
+  text-align: center;
+  flex: 1;
+  min-width: 4rem;
+  max-width: 6rem;
 }
 
 .monthCalendars {
