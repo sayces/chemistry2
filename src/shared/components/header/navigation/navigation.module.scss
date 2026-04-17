@@ -2,10 +2,10 @@
 
 .nav {
   position: fixed;
-  top: 0;
+  top: 3rem;
   left: 0;
   right: 0;
-  z-index: 20;
+  z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,6 +16,10 @@
   width: calc(var(--column-unit) * var(--columns-count) * 2 - var(--column-unit));
   margin-left: auto;
   margin-right: auto;
+
+  @media (min-width: $breakpoint-768) {
+    top: 0;
+  }
 }
 
 .navItem {
