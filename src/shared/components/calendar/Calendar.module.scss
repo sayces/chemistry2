@@ -23,7 +23,7 @@
   & :global(.rdp-month_caption) {
     background: rgba(255, 255, 255, 0.08);
     width: 15rem;
-    border-radius: 0.8rem;
+    border-radius: 20;
     padding: 0.5rem 0.1rem;
     font-weight: 400;
     font-size: 1rem;
@@ -41,7 +41,7 @@
     max-width: none;
     padding: 0;
     background: rgba(0, 0, 0, 0.02);
-    border-radius: 1rem;
+    border-radius: 20;
     backdrop-filter: blur(4px);
     border: 1px solid rgba(255, 255, 255, 0.06);
   }
@@ -61,7 +61,7 @@
 
   // Calendar day numbers
   & :global(.rdp-day) {
-    border-radius: 20px;
+    border-radius: 20;
     overflow: hidden;
   }
 
@@ -128,6 +128,8 @@
   flex: 1;
   min-width: 4rem;
   max-width: 6rem;
+  opacity: .5;
+  mix-blend-mode: multiply;
 }
 
 .monthCalendars {
@@ -139,13 +141,13 @@
 }
 
 .navButton {
-  width: 100%;
+  width: 18rem;
   padding: 0.8rem 1.5rem;
   font-size: 1.2rem;
   color: inherit;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 0.6rem;
+  border-radius: 20;
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
