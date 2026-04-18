@@ -1,34 +1,44 @@
+@use "@/shared/styles/variables" as *;
+@use "@/shared/styles/theme" as *;
+
 .calendar {
   width: 100%;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   background: transparent;
   backdrop-filter: none;
-  z-index: 1;
+  z-index: 0;
   pointer-events: auto;
 
   & :global([data-slot="calendar"]) {
     width: 100%;
     max-width: none;
-    padding: 0;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateZ(0);
+    isolation: isolate;
+    backdrop-filter: blur(4px);
   }
 
-  // Hide internal navigation arrows
   & :global(.rdp-nav) {
     display: none;
   }
 
-  // Month caption container - separate visual entity
   & :global(.rdp-month_caption) {
     background: rgba(255, 255, 255, 0.08);
     width: 15rem;
-    border-radius: 20;
+    border-radius: 20px;
     padding: 0.5rem 0.1rem;
     font-weight: 400;
     font-size: 1rem;
     margin: 0.5rem auto;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
 
   & :global(.rdp-caption_label) {
@@ -36,64 +46,112 @@
     font-size: 1.2rem;
   }
 
-  & :global([data-slot="calendar"]) {
+  & :global(.rdp-months) {
     width: 100%;
+  }
+
+  & :global(.rdp-month) {
+    width: 100%;
+  }
+
+  & :global(.rdp-table) {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  & :global(.rdp-head) {
+    width: 100%;
+  }
+
+  & :global(.rdp-head_row) {
+    width: 100%;
+    display: flex;
+  }
+
+  & :global(.rdp-head_cell) {
+    width: calc(100% / 7);
     max-width: none;
-    padding: 0;
-    background: rgba(0, 0, 0, 0.02);
-    border-radius: 20;
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-  }
-
-  // Chevron icons in calendar
-  & :global(.rdp-chevron),
-  & :global([data-slot="calendar"]) svg {
-    width: 2rem;
-    height: 2rem;
-  }
-
-  // Weekday names (Mon, Tue, etc.)
-  & :global(.rdp-weekday) {
-    font-size: 1rem;
+    font-size: clamp(0.7rem, 2vw, 1rem);
     font-weight: 200;
+    opacity: 0.5;
+    text-align: center;
+    padding: 0.5rem 0;
   }
 
-  // Calendar day numbers
+  & :global(.rdp-body) {
+    width: 100%;
+  }
+
+  & :global(.rdp-weeks) {
+    width: 100%;
+  }
+
+  & :global(.rdp-week) {
+    width: 100%;
+    display: flex;
+  }
+
   & :global(.rdp-day) {
-    border-radius: 20;
+    width: calc(100% / 7);
+    max-width: none;
+    height: auto;
+    aspect-ratio: 1/1;
+    border-radius: 20px;
     overflow: hidden;
+    position: relative;
+    margin: 0;
+    padding: 0;
   }
 
-  & :global(.rdp-day_button),
-  & :global([data-day]) {
-    font-size: 1rem;
+  & :global(.rdp-day_button) {
+    width: 100%;
+    height: 100%;
+    font-size: clamp(0.75rem, 2.5vw, 1rem);
     font-weight: 400;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    padding: 0;
+    margin: 0;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
   }
 
   & :global(.rdp-day)[data-selected="true"] {
+    background: rgba(255, 255, 255, 0.15);
     box-shadow:
       inset 0 0 0 1px #00000050,
       0 0 6px rgba(0, 0, 0, 0.8),
       0 0 12px rgba(0, 0, 0, 0.8);
-    mix-blend-mode: difference;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     animation: bubblePulse 0.2s ease-in-out forwards;
   }
 
   @keyframes bubblePulse {
     0%,
     100% {
+      transform: scale(1.0);
       box-shadow:
-        inset 0 0 0 1px #00000050,
-        0 0 6px rgba(0, 0, 0, 0.8),
-        0 0 12px rgba(0, 0, 0, 0.8);
+        inset 0 0 0 2px #00000050,
+        0 0 2px rgba(0, 0, 0, 0.8),
+        0 0 2px rgba(0, 0, 0, 0.8);
     }
     50% {
+      transform: scale(.8);
       box-shadow:
         inset 0 0 0 2px #00000030,
-        0 0 12px rgba(0, 0, 0, 0.6),
-        0 0 24px rgba(0, 0, 0, 0.3);
+        0 0 2px rgba(0, 0, 0, 0.6),
+        0 0 2px rgba(0, 0, 0, 0.3);
     }
   }
 
@@ -108,36 +166,19 @@
   gap: 1rem;
   align-items: center;
   width: 100%;
+  max-width: 100%;
+  overflow: visible;
   position: relative;
   z-index: 5;
 }
 
-.weekDaysHeader {
-  display: flex;
-  justify-content: center;
-  gap: 0;
-  width: 100%;
-  flex-wrap: nowrap;
-  margin: 1rem 0;
-}
-
-.weekDay {
-  font-size: 1rem;
-  font-weight: 200;
-  text-align: center;
-  flex: 1;
-  min-width: 4rem;
-  max-width: 6rem;
-  opacity: .5;
-  mix-blend-mode: multiply;
-}
-
 .monthCalendars {
   display: flex;
-  gap: var(--column-unit);
-  justify-content: center;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 2rem;
   width: 100%;
+  max-width: 100%;
+  overflow: visible;
 }
 
 .navButton {
@@ -147,7 +188,7 @@
   color: inherit;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 20;
+  border-radius: 20px;
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
@@ -160,5 +201,20 @@
 
   &:active {
     transform: scale(0.98);
+  }
+}
+
+.pageLayout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
+  overflow: visible;
+}
+
+@media (max-width: 768px) {
+  .pageLayout {
+    flex-direction: column;
   }
 }
