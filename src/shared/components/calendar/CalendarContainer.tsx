@@ -26,9 +26,7 @@ const CalendarContainer = () => {
   const [menu, setMenu] = useState<MenuState | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [isMobile, setIsMobile] = useState(false);
-  const [lastClickedCalendarId, setLastClickedCalendarId] = useState<
-    string | null
-  >(null);
+  const lastClickedCalendarIdRef = useRef<string | null>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const clickPositionRef = useRef<{ x: number; y: number } | null>(null);
 
@@ -112,7 +110,7 @@ const CalendarContainer = () => {
         x: rect.left - wrapperRect.left,
         y: rect.top + rect.height / 2 - wrapperRect.top,
       };
-      setLastClickedCalendarId(calendarId);
+      lastClickedCalendarIdRef.current = calendarId;
     }
   };
 
@@ -142,7 +140,7 @@ const CalendarContainer = () => {
           date,
           anchorX: clickPositionRef.current.x,
           anchorY: clickPositionRef.current.y,
-          calendarId: lastClickedCalendarId || calendarId,
+          calendarId: lastClickedCalendarIdRef.current || calendarId
         });
       }
     }
@@ -179,7 +177,7 @@ const CalendarContainer = () => {
               <div key={cal.id} className="w-full">
                 <div
                   className={styles.calendar}
-                  onMouseDown={(e) => handleDayMouseDown(cal.id, e)}
+                  onMouseDownCapture={(e) => handleDayMouseDown(cal.id, e)}
                 >
                   <Calendar
                     mode="single"

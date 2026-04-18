@@ -79,8 +79,8 @@ const TimeMenu = ({
   const lineStyles = side === 'left'
     ? {
         top: `${anchorY}px`,
-        right: `calc(100% - ${anchorX}px)`,
-        width: `calc(${anchorX}px + 6rem)`,
+        right: `calc(100% - ${anchorX}px - 4rem)`,
+        width: `calc(${anchorX}px + 11rem)`,
       }
     : {
         top: `${anchorY}px`,
