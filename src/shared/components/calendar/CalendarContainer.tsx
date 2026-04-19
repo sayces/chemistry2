@@ -156,7 +156,7 @@ const CalendarContainer = () => {
                     anchorY={menu.anchorY}
                     onClose={handleMenuClose}
                     onTimeSelect={handleTimeSelect}
-                    isMobile={true}
+                    
                   />
                 )}
 
@@ -182,7 +182,7 @@ const CalendarContainer = () => {
             anchorY={menu.anchorY}
             onClose={handleMenuClose}
             onTimeSelect={handleTimeSelect}
-            isMobile={false}
+            
           />
         )}
 

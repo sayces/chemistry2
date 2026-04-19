@@ -5,6 +5,7 @@ import { format, getDay } from "date-fns";
 import { ru } from "date-fns/locale";
 import styles from './TimeMenu.module.scss';
 import { clsx } from "clsx";
+import { usePlatformStore } from "@/shared/store/usePlatformStore";
 
 interface TimeMenuProps {
   date: Date;
@@ -12,7 +13,6 @@ interface TimeMenuProps {
   anchorY: number;
   onClose: () => void;
   onTimeSelect?: (date: Date, time: string) => void;
-  isMobile?: boolean;
   ignoreRef?: RefObject<HTMLElement | null>;
 }
 
@@ -27,13 +27,14 @@ const TimeMenu = ({
   anchorY,
   onClose,
   onTimeSelect,
-  isMobile,
   ignoreRef
 }: TimeMenuProps) => {
   const menuRef = useRef<HTMLDivElement>(null);
 
   const day = getDay(date);
   const side = (day >= 1 && day <= 3) ? 'left' : 'right';
+
+  const { isMobile } = usePlatformStore()
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
