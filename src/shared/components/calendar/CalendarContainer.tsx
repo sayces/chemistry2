@@ -5,7 +5,7 @@ import { Calendar } from "@/shared/shadcn/ui/calendar";
 import Container from "@/shared/components/container/Container";
 import styles from "./Calendar.module.scss";
 import { ru } from "date-fns/locale";
-import TimeMenu from "@/shared/components/timemenu/TimeMenu";
+import TimeMenu from "@/shared/components/timeMenu/TimeMenu";
 import {
   useCalendarMonths,
   isSameDay,
