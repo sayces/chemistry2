@@ -8,6 +8,5 @@
   width: 100%;
   max-width: calc(var(--column-unit) * var(--columns-count) * 2 - var(--column-unit));
   margin: 0 auto;
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  padding: 0;
 }
