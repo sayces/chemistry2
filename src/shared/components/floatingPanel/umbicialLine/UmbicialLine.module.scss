@@ -1,0 +1,27 @@
+@use "@/shared/styles/variables" as *;
+@use "@/shared/styles/theme" as *;
+
+.umbilicalLine {
+  position: absolute;
+  height: $column-unit;
+  transform: translateY(-50%);
+  z-index: -10;
+  pointer-events: none;
+  border-radius: 0;
+}
+
+.side_right {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0.95),
+  );
+}
+
+.side_left {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 255, 255, 0.25),
+  );
+}

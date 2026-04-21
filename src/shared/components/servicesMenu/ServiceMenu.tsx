@@ -6,8 +6,6 @@ interface ServiceMenuProps {
   anchorY: number;
   onClose: () => void;
   onTimeSelect?: (date: Date, time: string) => void;
-  isMobile?: boolean;
-  
 }
 
 const ServiceMenu = () => {

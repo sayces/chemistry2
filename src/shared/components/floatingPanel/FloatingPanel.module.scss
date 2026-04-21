@@ -1,0 +1,47 @@
+.floatingPanel {
+  position: absolute;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.side_right {
+  left: calc(100% + 4rem);
+  transform: translateY(-50%);
+}
+
+.side_left {
+  right: calc(100% + 4rem);
+  transform: translateY(-50%);
+}
+
+.side_bottom {
+  position: relative;
+  left: auto;
+  right: auto;
+  top: auto;
+  transform: none;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.side_top {
+  position: relative;
+  left: auto;
+  right: auto;
+  top: auto;
+  transform: none;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .floatingPanel {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto !important;
+    transform: none;
+    width: 100%;
+    margin-top: 1.5rem;
+  }
+}

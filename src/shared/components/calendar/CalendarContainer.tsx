@@ -11,11 +11,16 @@ import {
   isSameDay,
   formatMonthCaptionRu,
 } from "@/entities/calendar";
+import FloatingPanel from "../floatingPanel/FloatingPanel";
+import { usePlatformStore } from "@/shared/store/usePlatformStore";
+
+type PanelSide = "left" | "right";
 
 interface MenuState {
   date: Date;
   anchorX: number;
   anchorY: number;
+  side: PanelSide;
   calendarId: string;
 }
 
@@ -24,49 +29,41 @@ const CalendarContainer = () => {
 
   const [mounted, setMounted] = useState(false);
   const [menu, setMenu] = useState<MenuState | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    undefined
-  );
-  const [isMobile, setIsMobile] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const clickPositionRef = useRef<{ x: number; y: number } | null>(null);
-  const lastClickedCalendarIdRef = useRef<string | null>(null);
+  const pendingAnchorRef = useRef<Omit<MenuState, "date"> | null>(null);
 
-  // ------------------------------------
-  // Инициализация
-  // ------------------------------------
+  const { isMobile } = usePlatformStore();
 
   useEffect(() => {
     setMounted(true);
-
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // ------------------------------------
-  // Обработчики
-  // ------------------------------------
-
   const handleDayMouseDown = (calendarId: string, e: React.MouseEvent) => {
-    const target = e.target as HTMLElement;
-    const dayButton = target.closest(".rdp-day");
+    if (!wrapperRef.current) return;
 
-    if (!dayButton || !wrapperRef.current) return;
+    const target = e.target as HTMLElement;
+    const dayButton =
+      target.closest(".rdp-day_button") ?? target.closest(".rdp-day");
+
+    if (!(dayButton instanceof HTMLElement)) return;
 
     const rect = dayButton.getBoundingClientRect();
     const wrapperRect = wrapperRef.current.getBoundingClientRect();
 
-    clickPositionRef.current = {
-      x: rect.left - wrapperRect.left,
-      y: rect.top + rect.height / 2 - wrapperRect.top,
+    const anchorX = rect.left + rect.width / 2 - wrapperRect.left;
+    const anchorY = rect.top + rect.height / 2 - wrapperRect.top;
+
+    const side: PanelSide =
+      anchorX < wrapperRect.width / 2 ? "left" : "right";
+
+    pendingAnchorRef.current = {
+      anchorX,
+      anchorY,
+      side,
+      calendarId,
     };
-    lastClickedCalendarIdRef.current = calendarId;
   };
 
   const handleSelect = (date: Date | undefined, calendarId: string) => {
@@ -76,7 +73,7 @@ const CalendarContainer = () => {
       return;
     }
 
-    if (isSameDay(selectedDate, date)) {
+    if (selectedDate && isSameDay(selectedDate, date)) {
       setSelectedDate(undefined);
       setMenu(null);
       return;
@@ -84,23 +81,26 @@ const CalendarContainer = () => {
 
     setSelectedDate(date);
 
-    if (wrapperRef.current && clickPositionRef.current) {
-      setMenu({
-        date,
-        anchorX: clickPositionRef.current.x,
-        anchorY: clickPositionRef.current.y,
-        calendarId: lastClickedCalendarIdRef.current ?? calendarId,
-      });
-    }
+    const pending = pendingAnchorRef.current;
+
+    setMenu({
+      date,
+      anchorX: pending?.anchorX ?? 0,
+      anchorY: pending?.anchorY ?? 0,
+      side: pending?.side ?? "right",
+      calendarId: pending?.calendarId ?? calendarId,
+    });
   };
 
   const handleMenuClose = () => {
     setMenu(null);
     setSelectedDate(undefined);
+    pendingAnchorRef.current = null;
   };
 
   const handleTimeSelect = (date: Date, time: string) => {
     console.log("Selected:", date, time);
+    handleMenuClose();
   };
 
   if (!mounted) {
@@ -117,75 +117,93 @@ const CalendarContainer = () => {
     <Container variant="default">
       <div className={styles.pageLayout}>
         <div className={styles.calendarsWrapper} ref={wrapperRef}>
-
           <button
             type="button"
             className={styles.navButton}
-            onClick={addPreviousMonth}
+            onClick={() => {
+              handleMenuClose();
+              addPreviousMonth();
+            }}
           >
             ← Предыдущие месяца
           </button>
 
           <div className={styles.monthCalendars}>
-            {calendars.map((cal) => (
-              <div key={cal.id} className="w-full">
+            {calendars.map((cal) => {
+              const isActiveCalendar = menu?.calendarId === cal.id;
 
-                <div
-                  className={styles.calendar}
-                  onMouseDownCapture={(e) => handleDayMouseDown(cal.id, e)}
-                >
-                  <Calendar
-                    mode="single"
-                    selected={selectedDate}
-                    onSelect={(date) => handleSelect(date, cal.id)}
-                    month={new Date(cal.year, cal.month)}
-                    locale={ru}
-                    showOutsideDays={false}
-                    className="w-full"
-                    formatters={{
-                      formatCaption: formatMonthCaptionRu,
-                    }}
-                  />
+              return (
+                <div key={cal.id} className="w-full">
+                  <div
+                    className={styles.calendar}
+                    onMouseDownCapture={(e) => handleDayMouseDown(cal.id, e)}
+                  >
+                    <Calendar
+                      mode="single"
+                      selected={selectedDate}
+                      onSelect={(date) => handleSelect(date, cal.id)}
+                      month={new Date(cal.year, cal.month)}
+                      locale={ru}
+                      showOutsideDays={false}
+                      className="w-full"
+                      formatters={{
+                        formatCaption: formatMonthCaptionRu,
+                      }}
+                    />
+                  </div>
+
+                  {/* Мобильная версия: меню под активным календарём */}
+                  {isMobile && menu && isActiveCalendar && (
+                    <FloatingPanel
+                      side="bottom"
+                      onClose={handleMenuClose}
+                      ignoreRef={wrapperRef}
+                    >
+                      <TimeMenu
+                        date={menu.date}
+                        onClose={handleMenuClose}
+                        onTimeSelect={handleTimeSelect}
+                      />
+                    </FloatingPanel>
+                  )}
                 </div>
-
-                {/* Мобильная версия: меню под активным календарём */}
-                {isMobile && menu?.calendarId === cal.id && (
-                  <TimeMenu
-                    date={menu.date}
-                    anchorX={menu.anchorX}
-                    anchorY={menu.anchorY}
-                    onClose={handleMenuClose}
-                    onTimeSelect={handleTimeSelect}
-                    
-                  />
-                )}
-
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <button
             type="button"
             className={styles.navButton}
-            onClick={addNextMonth}
+            onClick={() => {
+              handleMenuClose();
+              addNextMonth();
+            }}
           >
             Следующие месяца →
           </button>
 
+          {/* Десктопная версия: меню сбоку */}
+          {!isMobile && menu && (
+            <FloatingPanel
+              side={menu.side}
+              anchorY={menu.anchorY}
+              ignoreRef={wrapperRef}
+              onClose={handleMenuClose}
+              umbilicalLine={{
+                start: {
+                  anchorX: menu.anchorX,
+                  anchorY: menu.anchorY,
+                },
+              }}
+            >
+              <TimeMenu
+                date={menu.date}
+                onClose={handleMenuClose}
+                onTimeSelect={handleTimeSelect}
+              />
+            </FloatingPanel>
+          )}
         </div>
-
-        {/* Десктопная версия: меню сбоку */}
-        {!isMobile && menu && (
-          <TimeMenu
-            date={menu.date}
-            anchorX={menu.anchorX}
-            anchorY={menu.anchorY}
-            onClose={handleMenuClose}
-            onTimeSelect={handleTimeSelect}
-            
-          />
-        )}
-
       </div>
     </Container>
   );
