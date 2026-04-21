@@ -2,11 +2,11 @@
 
 .container {
   width: 100%;
-  max-width: calc(var(--column-unit) * var(--columns-count) * 2 - var(--column-unit));
-  margin: 0 auto;
-}
-
-.containerWithPadding {
-  @extend .container;
-  padding: 0 var(--column-unit);
+  min-width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
 }

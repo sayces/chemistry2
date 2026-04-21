@@ -114,7 +114,7 @@ const CalendarContainer = () => {
   }
 
   return (
-    <Container variant="default">
+    
       <div className={styles.pageLayout}>
         <div className={styles.calendarsWrapper} ref={wrapperRef}>
           <button
@@ -205,7 +205,7 @@ const CalendarContainer = () => {
           )}
         </div>
       </div>
-    </Container>
+    
   );
 };
 

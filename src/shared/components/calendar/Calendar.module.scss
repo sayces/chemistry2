@@ -1,6 +1,7 @@
 @use "@/shared/styles/variables" as *;
 @use "@/shared/styles/theme" as *;
 
+// календарь
 .calendar {
   width: 100%;
   overflow: hidden;
@@ -10,6 +11,8 @@
   backdrop-filter: none;
   z-index: 0;
   pointer-events: auto;
+  border-radius: 20;
+  box-shadow: 0 0 8px #00000050;
 
   & :global([data-slot="calendar"]) {
     width: 100%;
@@ -160,13 +163,14 @@
   }
 }
 
+// обертка всех календарей
 .calendarsWrapper {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   align-items: center;
   width: 100%;
-  max-width: 100%;
+  max-width: calc(var(--column-unit) * var(--columns-count) * 2 - var(--column-unit));
   overflow: visible;
   position: relative;
   z-index: 5;
@@ -179,6 +183,7 @@
   width: 100%;
   max-width: 100%;
   overflow: visible;
+  
 }
 
 .navButton {
@@ -207,8 +212,10 @@
 .pageLayout {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  height: fit-content;
   position: relative;
   overflow: visible;
 }

@@ -1,12 +1,21 @@
+@use "@/shared/styles/theme" as *;
+
 .main {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  max-width: calc(var(--column-unit) * var(--columns-count) * 2 - var(--column-unit));
-  margin: 0 auto;
-  padding: 0;
+  position: relative; 
+  display: grid;
+  grid-template-columns: 1fr 35rem 1fr;
+  grid-template-rows: 1fr;
+  align-items: start;
+  justify-content: center;
+  min-width: fit-content;
+  width: 100vw;
+  margin: 1rem;
+  padding: 1rem;
+  gap: 1rem;
+  
+  @media (max-width: $breakpoint-768) {
+    display: flex;
+    flex-direction: column;
+  }
 }
+

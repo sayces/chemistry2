@@ -1,0 +1,18 @@
+@use "@/shared/styles/variables" as *;
+@use "@/shared/styles/theme" as *;
+
+.modal {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff10;
+  backdrop-filter: blur(10px);
+  padding: 1rem 2rem;
+  margin: 0;
+  border-radius: 20;
+  border: 1px solid #ffffff30;
+  width: var(--modal-width, 100%);
+  min-width: fit-content;
+  height: var(--modal-height, 100%);
+}
