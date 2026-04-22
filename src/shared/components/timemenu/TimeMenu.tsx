@@ -19,17 +19,6 @@ const TimeMenu = ({ date, onClose, onTimeSelect }: TimeMenuProps) => {
         <h3 className={styles.timeMenuTitle}>
           {format(date, "d MMMM yyyy", { locale: ru })}
         </h3>
-
-        {onClose && (
-          <button
-            type="button"
-            className={styles.closeButton}
-            onClick={onClose}
-            aria-label="Закрыть"
-          >
-            ×
-          </button>
-        )}
       </div>
 
       <ul className={styles.timeSlots}>

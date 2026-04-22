@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { Calendar } from "@/shared/shadcn/ui/calendar";
 import Container from "@/shared/components/container/Container";
 import styles from "./Calendar.module.scss";
@@ -13,6 +13,7 @@ import {
 } from "@/entities/calendar";
 import FloatingPanel from "../floatingPanel/FloatingPanel";
 import { usePlatformStore } from "@/shared/store/usePlatformStore";
+import { useCalendarStore } from "@/shared/store/calendarStore/useCalendarStore";
 
 type PanelSide = "left" | "right";
 
@@ -29,12 +30,12 @@ const CalendarContainer = () => {
 
   const [mounted, setMounted] = useState(false);
   const [menu, setMenu] = useState<MenuState | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const pendingAnchorRef = useRef<Omit<MenuState, "date"> | null>(null);
 
   const { isMobile } = usePlatformStore();
+  const { setDate, setTime, selectedDate } = useCalendarStore();
 
   useEffect(() => {
     setMounted(true);
@@ -68,18 +69,18 @@ const CalendarContainer = () => {
 
   const handleSelect = (date: Date | undefined, calendarId: string) => {
     if (!date) {
-      setSelectedDate(undefined);
+      setDate(null);
       setMenu(null);
       return;
     }
 
     if (selectedDate && isSameDay(selectedDate, date)) {
-      setSelectedDate(undefined);
+      setDate(null);
       setMenu(null);
       return;
     }
 
-    setSelectedDate(date);
+    setDate(date);
 
     const pending = pendingAnchorRef.current;
 
@@ -94,7 +95,7 @@ const CalendarContainer = () => {
 
   const handleMenuClose = () => {
     setMenu(null);
-    setSelectedDate(undefined);
+    setDate(null);
     pendingAnchorRef.current = null;
   };
 
@@ -114,7 +115,7 @@ const CalendarContainer = () => {
   }
 
   return (
-    
+    <Suspense fallback={<p>Loading</p>}>
       <div className={styles.pageLayout}>
         <div className={styles.calendarsWrapper} ref={wrapperRef}>
           <button
@@ -140,7 +141,7 @@ const CalendarContainer = () => {
                   >
                     <Calendar
                       mode="single"
-                      selected={selectedDate}
+                      selected={selectedDate || undefined}
                       onSelect={(date) => handleSelect(date, cal.id)}
                       month={new Date(cal.year, cal.month)}
                       locale={ru}
@@ -181,31 +182,9 @@ const CalendarContainer = () => {
           >
             Следующие месяца →
           </button>
-
-          {/* Десктопная версия: меню сбоку */}
-          {!isMobile && menu && (
-            <FloatingPanel
-              side={menu.side}
-              anchorY={menu.anchorY}
-              ignoreRef={wrapperRef}
-              onClose={handleMenuClose}
-              umbilicalLine={{
-                start: {
-                  anchorX: menu.anchorX,
-                  anchorY: menu.anchorY,
-                },
-              }}
-            >
-              <TimeMenu
-                date={menu.date}
-                onClose={handleMenuClose}
-                onTimeSelect={handleTimeSelect}
-              />
-            </FloatingPanel>
-          )}
         </div>
       </div>
-    
+    </Suspense>
   );
 };
 
