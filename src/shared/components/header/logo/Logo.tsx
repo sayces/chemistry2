@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Typography from "@/shared/components/typography/Typography";
 import { usePathname } from "next/navigation";
-import { useNavigationStore, navItems } from "@/shared/store/useNavigationStore";
+import { useNavigationStore, navItems } from "@/entities/store/useNavigationStore";
 import styles from "./Logo.module.scss";
 
 interface LogoProps {

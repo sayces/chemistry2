@@ -1,0 +1,21 @@
+.switchWrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+  border: 1px solid #ffffff30;
+  border-radius: 10px;
+  background-color: #ffffff30;
+  transition: all 0.1s;
+  width: 100%;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.active {
+  background-color: #dbffa069;
+}

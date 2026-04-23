@@ -11,7 +11,7 @@ import {
   useNavigationStore,
   navItems,
   NavItemId,
-} from "@/shared/store/useNavigationStore";
+} from "@/entities/store/useNavigationStore";
 import styles from "./Navigation.module.scss";
 
 const iconMap = {

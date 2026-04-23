@@ -53,7 +53,7 @@ const Button = ({
       type={type}
       style={style}
     >
-      {img && <Image src={img} alt={alt || ""} width={20} height={20} />}
+      {img && <Image src={img} alt={alt || ""} loading="eager" width={20} height={20} />}
       {text && <p className={styles.label}>{text}</p>}
       {children}
     </button>

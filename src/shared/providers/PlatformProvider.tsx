@@ -1,6 +1,6 @@
 'use client';
 
-import { usePlatformStore } from '@/shared/store/usePlatformStore'
+import { usePlatformStore } from '@/entities/store/usePlatformStore'
 import { useEffect } from 'react'
 
 export const PlatformProvider = () => {

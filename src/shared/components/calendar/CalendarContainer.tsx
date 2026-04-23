@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef, Suspense } from "react";
 import { Calendar } from "@/shared/shadcn/ui/calendar";
-import Container from "@/shared/components/container/Container";
 import styles from "./Calendar.module.scss";
 import { ru } from "date-fns/locale";
 import TimeMenu from "@/shared/components/timeMenu/TimeMenu";
@@ -12,8 +11,8 @@ import {
   formatMonthCaptionRu,
 } from "@/entities/calendar";
 import FloatingPanel from "../floatingPanel/FloatingPanel";
-import { usePlatformStore } from "@/shared/store/usePlatformStore";
-import { useCalendarStore } from "@/shared/store/calendarStore/useCalendarStore";
+import { usePlatformStore } from "@/entities/store/usePlatformStore";
+import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
 
 type PanelSide = "left" | "right";
 
@@ -28,18 +27,11 @@ interface MenuState {
 const CalendarContainer = () => {
   const { calendars, addPreviousMonth, addNextMonth } = useCalendarMonths();
 
-  const [mounted, setMounted] = useState(false);
-  const [menu, setMenu] = useState<MenuState | null>(null);
-
   const wrapperRef = useRef<HTMLDivElement>(null);
   const pendingAnchorRef = useRef<Omit<MenuState, "date"> | null>(null);
 
   const { isMobile } = usePlatformStore();
-  const { setDate, setTime, selectedDate } = useCalendarStore();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const { setDate, selectedDate } = useCalendarStore();
 
   const handleDayMouseDown = (calendarId: string, e: React.MouseEvent) => {
     if (!wrapperRef.current) return;
@@ -70,13 +62,13 @@ const CalendarContainer = () => {
   const handleSelect = (date: Date | undefined, calendarId: string) => {
     if (!date) {
       setDate(null);
-      setMenu(null);
+      
       return;
     }
 
     if (selectedDate && isSameDay(selectedDate, date)) {
       setDate(null);
-      setMenu(null);
+      
       return;
     }
 
@@ -84,17 +76,11 @@ const CalendarContainer = () => {
 
     const pending = pendingAnchorRef.current;
 
-    setMenu({
-      date,
-      anchorX: pending?.anchorX ?? 0,
-      anchorY: pending?.anchorY ?? 0,
-      side: pending?.side ?? "right",
-      calendarId: pending?.calendarId ?? calendarId,
-    });
+    
   };
 
   const handleMenuClose = () => {
-    setMenu(null);
+    
     setDate(null);
     pendingAnchorRef.current = null;
   };
@@ -104,15 +90,15 @@ const CalendarContainer = () => {
     handleMenuClose();
   };
 
-  if (!mounted) {
-    return (
-      <Container variant="default">
-        <div className={styles.calendarsWrapper}>
-          <div style={{ height: "20rem" }} />
-        </div>
-      </Container>
-    );
-  }
+    // if (!mounted) {
+    //   return (
+    //     <Container variant="default">
+    //       <div className={styles.calendarsWrapper}>
+    //         <div style={{ height: "20rem" }} />
+    //       </div>
+    //     </Container>
+    //   );
+    // }
 
   return (
     <Suspense fallback={<p>Loading</p>}>
@@ -131,7 +117,7 @@ const CalendarContainer = () => {
 
           <div className={styles.monthCalendars}>
             {calendars.map((cal) => {
-              const isActiveCalendar = menu?.calendarId === cal.id;
+              // const isActiveCalendar = menu?.calendarId === cal.id;
 
               return (
                 <div key={cal.id} className="w-full">
@@ -154,14 +140,14 @@ const CalendarContainer = () => {
                   </div>
 
                   {/* Мобильная версия: меню под активным календарём */}
-                  {isMobile && menu && isActiveCalendar && (
+                  {isMobile && (
                     <FloatingPanel
                       side="bottom"
                       onClose={handleMenuClose}
                       ignoreRef={wrapperRef}
                     >
                       <TimeMenu
-                        date={menu.date}
+                        date={new Date()}
                         onClose={handleMenuClose}
                         onTimeSelect={handleTimeSelect}
                       />

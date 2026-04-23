@@ -1,32 +1,41 @@
-import { services } from '@/shared/store/serviceStore/types';
-import styles from './ServiceMenu.module.scss'
-import Typography from '../typography/Typography';
+import { services } from "@/entities/store/serviceStore/types";
+import styles from "./ServiceMenu.module.scss";
+import Typography from "../typography/Typography";
+import SwitchButton from "../switch/SwitchButton";
+import { useState } from "react";
 
 interface ServiceMenuProps {
-  time: string;
-  anchorX: number;
-  anchorY: number;
-  onClose: () => void;
+  onClose?: () => void;
   onTimeSelect?: (date: Date, time: string) => void;
 }
 
-const ServiceMenu = () => {
+const ServiceMenu = ({ onClose, onTimeSelect }: ServiceMenuProps) => {
+  const [selectedService, setSelectedService] = useState<
+    keyof typeof services | null
+  >(null);
 
   const serviceList = Object.entries(services);
 
-  return (<>
- 
-    <Typography as='h1' size='10'>Услуги</Typography>
-    <ul>
-      {serviceList.map(([serviceKey, serviceName]) => (
+  const handleServiceChange = (serviceKey: keyof typeof services) => {
+    setSelectedService(serviceKey);
+  };
+  return (
+    <div className={styles.serviceMenu}>
+      <Typography as="h4">Услуги</Typography>
+      <ul className={styles.serviceList}>
+        {serviceList.map(([serviceKey, serviceName]) => (
           <li key={serviceKey} className={styles.serviceItem}>
-            {serviceName}
-            
+            <SwitchButton
+              isActive={selectedService === serviceKey}
+              onClick={() => {}}
+            >
+              {serviceName}
+            </SwitchButton>
           </li>
         ))}
-    </ul>
-    </>
-  )
-}
+      </ul>
+    </div>
+  );
+};
 
 export default ServiceMenu;

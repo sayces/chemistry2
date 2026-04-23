@@ -3,6 +3,10 @@
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import styles from "./TimeMenu.module.scss";
+import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
+import { makeDateTime, TIME_SLOTS, TimeSlot } from "./utils/timeSlots";
+import Typography from "../typography/Typography";
+import { useClickOutside } from "@/shared/hooks/useClickOutside";
 
 interface TimeMenuProps {
   date: Date;
@@ -10,15 +14,26 @@ interface TimeMenuProps {
   onTimeSelect?: (date: Date, time: string) => void;
 }
 
-const TIME_SLOTS = ["10:00", "12:00", "14:00", "16:00", "18:00"];
-
 const TimeMenu = ({ date, onClose, onTimeSelect }: TimeMenuProps) => {
+  const { setDate, setTime } = useCalendarStore();
+
+  const handleSelectTime = (slot: TimeSlot) => {
+    // делаем полную дату из выбранного дня + времени
+    const dateTime = makeDateTime(date, slot);
+
+    onTimeSelect?.(date, slot); // строка для UI / бэкенда
+    setDate(date); // сохраняем дату
+    setTime(dateTime); // сохраняем дату+время как Date
+  };
+
+ 
+
   return (
     <div className={styles.timeMenu}>
       <div className={styles.header}>
-        <h3 className={styles.timeMenuTitle}>
+        <Typography as="h4" className={styles.timeMenuTitle}>
           {format(date, "d MMMM yyyy", { locale: ru })}
-        </h3>
+        </Typography>
       </div>
 
       <ul className={styles.timeSlots}>
@@ -27,7 +42,7 @@ const TimeMenu = ({ date, onClose, onTimeSelect }: TimeMenuProps) => {
             <button
               type="button"
               className={styles.timeSlotButton}
-              onClick={() => onTimeSelect?.(date, slot)}
+              onClick={() => handleSelectTime(slot)}
             >
               {slot}
             </button>

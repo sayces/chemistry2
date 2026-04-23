@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import Column from "./Column";
-import { useNavigationStore, navItems } from "@/shared/store/useNavigationStore";
+import { useNavigationStore, navItems } from "@/entities/store/useNavigationStore";
 import containerStyles from "./Columns.module.scss";
 import styles from "./Column.module.scss";
 
