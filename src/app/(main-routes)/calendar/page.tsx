@@ -1,6 +1,6 @@
 "use client";
 
-import CalendarContainer from "@/shared/components/calendar/CalendarContainer";
+import CalendarsContainer from "@/shared/components/calendar/CalendarsContainer";
 import Container from "@/shared/components/container/Container";
 import Main from "@/shared/components/main/Main";
 import Modal from "@/shared/components/modal/Modal";
@@ -20,7 +20,7 @@ const CalendarPage = () => {
       <Container>{selectedDate && !isMobile && <Modal>123</Modal>}</Container>
 
       <Container>
-        <CalendarContainer />
+        <CalendarsContainer />
       </Container>
 
       <Container>

@@ -2,9 +2,11 @@ import { create, StateCreator } from "zustand";
 import { CalendarState, CalendarStore } from "./types";
 import { Service } from "../serviceStore/types";
 
+const now = new Date()
+
 const initialState: CalendarState = {
-  selectedDate: null,
-  selectedTime: null,
+  selectedDate: now,
+  selectedTime: now,
   selectedServices: null,
 };
 

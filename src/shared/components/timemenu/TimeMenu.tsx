@@ -9,7 +9,7 @@ import Typography from "../typography/Typography";
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
 
 interface TimeMenuProps {
-  date: Date;
+  date: Date | null;
   onClose?: () => void;
   onTimeSelect?: (date: Date, time: string) => void;
 }
@@ -19,9 +19,9 @@ const TimeMenu = ({ date, onClose, onTimeSelect }: TimeMenuProps) => {
 
   const handleSelectTime = (slot: TimeSlot) => {
     // делаем полную дату из выбранного дня + времени
-    const dateTime = makeDateTime(date, slot);
+    const dateTime = makeDateTime(date as Date, slot);
 
-    onTimeSelect?.(date, slot); // строка для UI / бэкенда
+    onTimeSelect?.(date as Date, slot); // строка для UI / бэкенда
     setDate(date); // сохраняем дату
     setTime(dateTime); // сохраняем дату+время как Date
   };
@@ -32,7 +32,7 @@ const TimeMenu = ({ date, onClose, onTimeSelect }: TimeMenuProps) => {
     <div className={styles.timeMenu}>
       <div className={styles.header}>
         <Typography as="h4" className={styles.timeMenuTitle}>
-          {format(date, "d MMMM yyyy", { locale: ru })}
+          {format(date as Date, "d MMMM yyyy", { locale: ru })}
         </Typography>
       </div>
 
