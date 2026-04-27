@@ -3,7 +3,7 @@
 import { createPortal } from "react-dom";
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
 import styles from "./Modal.module.scss";
-import { useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 import { useModalStore } from "@/entities/store/modal/useModalStore";
 
 interface ModalProps {
@@ -12,13 +12,10 @@ interface ModalProps {
   height?: string;
 }
 
-
-const Modal = ({ children, width, height}: ModalProps) => {
+const Modal = ({ children, width, height }: ModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   const { isOpen, closeModal, openModal } = useModalStore(); // забираем isOpen и closeModal
-
-  
 
   useClickOutside(modalRef, () => {
     if (isOpen) {
@@ -28,7 +25,7 @@ const Modal = ({ children, width, height}: ModalProps) => {
 
   if (!isOpen) return null;
 
-  return createPortal(
+  return (
     <div
       className={styles.modalBackdrop}
       onClick={closeModal} // клик по фону тоже закрывает
@@ -36,16 +33,17 @@ const Modal = ({ children, width, height}: ModalProps) => {
       <div
         ref={modalRef}
         className={styles.modal}
-        style={{
-          "--modal-width": width,
-          "--modal-height": height,
-        } as React.CSSProperties}
+        style={
+          {
+            "--modal-width": width,
+            "--modal-height": height,
+          } as React.CSSProperties
+        }
         onClick={(e) => e.stopPropagation()} // клик внутри модала не закрывает
       >
         {children}
       </div>
-    </div>,
-    document.body,
+    </div>
   );
 };
 

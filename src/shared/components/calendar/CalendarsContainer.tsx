@@ -1,132 +1,129 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { Calendar } from "@/shared/shadcn/ui/calendar";
 import styles from "./CalendarsContainer.module.scss";
 import { ru } from "date-fns/locale";
-import TimeMenu from "@/shared/components/timeMenu/TimeMenu";
-import {
-  useCalendarMonths,
-  isSameDay,
-  formatMonthCaptionRu,
-} from "@/entities/calendar";
-import FloatingPanel from "../floatingPanel/FloatingPanel";
-import { usePlatformStore } from "@/entities/store/usePlatformStore";
+import { useCalendarMonths, formatMonthCaptionRu } from "@/entities/calendar";
 import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
 
-// Mocking types/interfaces if they are not provided in the context, 
-// assuming standard structures based on usage.
-
 interface CalendarsProps {
-  quantity?: number;
+  selectedDate?: Date | null;
+  onSelect?: (date: Date | undefined) => void;
+  onMonthChange?: (direction: "prev" | "next") => void;
+  onDatePositionChange?: (
+    position: { anchorX: number; anchorY: number } | null,
+  ) => void;
+  children?: React.ReactNode;
 }
 
-const CalendarsContainer = ({}: CalendarsProps) => {
+const CalendarsContainer = ({
+  selectedDate,
+  onSelect,
+  onMonthChange,
+  onDatePositionChange,
+  children,
+}: CalendarsProps) => {
   const { calendars, addPreviousMonth, addNextMonth } = useCalendarMonths();
-  const { setDate, selectedDate } = useCalendarStore();
-  const { isMobile } = usePlatformStore();
+  
 
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  // We don't need complex anchor calculation for mobile bottom sheet usually,
-  // but keeping the structure clean.
-  
-  const handleSelect = (date: Date | undefined) => {
-    if (!date) {
-      setDate(null);
+  useEffect(() => {
+    if (!selectedDate || !wrapperRef.current) {
+      onDatePositionChange?.(null);
       return;
     }
 
-    // Toggle behavior: if clicking the same date, deselect it
-    if (selectedDate && isSameDay(selectedDate, date)) {
-      setDate(null);
+    const selectedCalendar = calendars.find(
+      (cal) =>
+        cal.year === selectedDate.getFullYear() &&
+        cal.month === selectedDate.getMonth(),
+    );
+    if (!selectedCalendar) {
+      onDatePositionChange?.(null);
       return;
     }
 
-    setDate(date);
-  };
+    const wrapperRect = wrapperRef.current.getBoundingClientRect();
+    const calendarContainer = wrapperRef.current.querySelector(
+      `[data-calendar-id="${selectedCalendar.id}"]`,
+    ) as HTMLElement;
+    if (!calendarContainer) {
+      onDatePositionChange?.(null);
+      return;
+    }
 
-  const handleMenuClose = () => {
-    setDate(null);
-  };
+    const calendarRect = calendarContainer.getBoundingClientRect();
+    const anchorY = calendarRect.top - wrapperRect.top;
 
-  const handleTimeSelect = (date: Date, time: string) => {
-    console.log("Selected:", date, time);
-    // Logic to save selection would go here
-    handleMenuClose();
-  };
+    const selectedCell = calendarContainer.querySelector(
+      '[data-selected="true"]',
+    ) as HTMLElement;
+    let anchorX: number;
+    if (selectedCell) {
+      const cellRect = selectedCell.getBoundingClientRect();
+      anchorX = cellRect.right - wrapperRect.left;
+    } else {
+      anchorX = calendarRect.right - wrapperRect.left;
+    }
+
+    onDatePositionChange?.({ anchorX, anchorY });
+  }, [selectedDate, calendars]);
 
   return (
-    <div className={styles.pageLayout}>
-      <div className={styles.calendarsWrapper} ref={wrapperRef}>
-        <button
-          type="button"
-          className={styles.navButton}
-          onClick={() => {
-            handleMenuClose();
-            addPreviousMonth();
-          }}
-          aria-label="Предыдущие месяца"
-        >
-          ← Предыдущие месяца
-        </button>
+    <div className={styles.calendarsWrapper}>
+      <button
+        type="button"
+        className={styles.navButton}
+        onClick={() => {
+          onMonthChange?.("prev");
+          addPreviousMonth();
+        }}
+        aria-label="Предыдущие месяца"
+      >
+        ← Предыдущие месяца
+      </button>
 
-        <div className={styles.monthCalendars}>
-          {calendars.map((cal) => {
-            return (
-              <div key={cal.id} className={styles.calendarItem}>
-                <div className={styles.calendar}>
-                  <Calendar
-                    mode="single"
-                    selected={selectedDate || undefined}
-                    onSelect={handleSelect}
-                    month={new Date(cal.year, cal.month)}
-                    locale={ru}
-                    showOutsideDays={false}
-                    className="w-full"
-                    formatters={{
-                      formatCaption: formatMonthCaptionRu,
-                    }}
-                  />
-                </div>
-
-                {/* Mobile version: Menu appears at bottom when a date is selected */}
-                {isMobile && selectedDate && (
-                  <FloatingPanel
-                    side="bottom"
-                    onClose={handleMenuClose}
-                    ignoreRef={wrapperRef}
-                  >
-                    <TimeMenu
-                      date={selectedDate}
-                      onClose={handleMenuClose}
-                      onTimeSelect={handleTimeSelect}
-                    />
-                  </FloatingPanel>
-                )}
+      <div className={styles.monthCalendars}>
+        {calendars.map((cal) => {
+          return (
+            <div
+              key={cal.id}
+              className={styles.calendarItem}
+              data-calendar-id={cal.id}
+            >
+              <div className={styles.calendar}>
+                <Calendar
+                  mode="single"
+                  selected={selectedDate || undefined}
+                  onSelect={onSelect}
+                  month={new Date(cal.year, cal.month)}
+                  locale={ru}
+                  showOutsideDays={false}
+                  className="w-full"
+                  formatters={{
+                    formatCaption: formatMonthCaptionRu,
+                  }}
+                />
               </div>
-            );
-          })}
-        </div>
-
-        <button
-          type="button"
-          className={styles.navButton}
-          onClick={() => {
-            handleMenuClose();
-            addNextMonth();
-          }}
-          aria-label="Следующие месяца"
-        >
-          Следующие месяца →
-        </button>
+            </div>
+          );
+        })}
       </div>
-      
-      {/* Desktop version could be implemented here if needed, 
-          typically using a portal or absolute positioning based on mouse coordinates,
-          but the original code only had mobile logic active in the return. 
-          If desktop support is needed, it would likely involve a different UI pattern 
-          or a Popover component instead of FloatingPanel for better UX on large screens. */}
+
+      <button
+        type="button"
+        className={styles.navButton}
+        onClick={() => {
+          onMonthChange?.("next");
+          addNextMonth();
+        }}
+        aria-label="Следующие месяца"
+      >
+        Следующие месяца →
+      </button>
+      {children}
     </div>
   );
 };

@@ -8,7 +8,7 @@ import {
   type Locale,
 } from "react-day-picker"
 
-import { cn } from "../../lib/utils"
+import { cn } from "../../lib/styleUtils"
 import { Button, buttonVariants } from "@/shared/shadcn/ui/button"
 import { ChevronLeftIcon, ChevronRightIcon, ChevronDownIcon } from "lucide-react"
 
@@ -119,7 +119,7 @@ function Calendar({
           defaultClassNames.range_end
         ),
         today: cn(
-          "rounded-(--cell-radius) bg-muted text-foreground data-[selected=true]:rounded-none",
+          "rounded-(--cell-radius) bg-muted/30 text-foreground data-[selected=true]:rounded-none",
           defaultClassNames.today
         ),
         outside: cn(

@@ -3,37 +3,58 @@
 import CalendarsContainer from "@/shared/components/calendar/CalendarsContainer";
 import Container from "@/shared/components/container/Container";
 import Main from "@/shared/components/main/Main";
-import Modal from "@/shared/components/modal/Modal";
-import ServiceMenu from "@/shared/components/servicesMenu/ServiceMenu";
-import TimeMenu from "@/shared/components/timeMenu/TimeMenu";
 import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
-import { usePlatformStore } from "@/entities/store/usePlatformStore";
-import { useModalStore } from "@/entities/store/modal/useModalStore";
+import { useState, useCallback } from "react";
+import BookingFlow from "@/shared/components/bookingFlow/BookingFlow";
 
 const CalendarPage = () => {
-  const { selectedDate, selectedTime } = useCalendarStore();
-  const { isMobile } = usePlatformStore();
-  const { isOpen, openModal } = useModalStore();
+  const { selectedDate, selectedTime, setDate } = useCalendarStore();
+  const [datePosition, setDatePosition] = useState<{
+    anchorX: number;
+    anchorY: number;
+  } | null>(null);
+
+  const handleSelect = (date: Date | undefined) => {
+    if (!date) {
+      setDate(null);
+      return;
+    }
+    if (selectedDate && date && date.getTime() === selectedDate.getTime()) {
+      setDate(null);
+      return;
+    }
+    setDate(date);
+    console.log(selectedDate);
+  };
+
+  const handleMenuClose = () => {
+    setDate(null);
+  };
+
+  const handleTimeSelect = (date: Date, time: string) => {
+    console.log("Selected:", date, time);
+    handleMenuClose();
+  };
+
+  const handleDatePositionChange = useCallback(
+    (position: { anchorX: number; anchorY: number } | null) => {
+      setDatePosition(position);
+    },
+    [],
+  );
 
   return (
     <Main>
-      <Container>{selectedDate && !isMobile && <Modal>123</Modal>}</Container>
-
+      <Container>123</Container>
       <Container>
-        <CalendarsContainer />
+        <CalendarsContainer
+          selectedDate={selectedDate}
+          onSelect={handleSelect}
+          onDatePositionChange={handleDatePositionChange}
+        ></CalendarsContainer>
       </Container>
-
       <Container>
-        <>
-          <Modal>
-            <TimeMenu date={selectedDate as Date}/>
-          </Modal>
-          {selectedTime && (
-            <Modal>
-              <ServiceMenu />
-            </Modal>
-          )}
-        </>
+        <BookingFlow />
       </Container>
     </Main>
   );
