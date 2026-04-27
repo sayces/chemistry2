@@ -1,7 +1,7 @@
 import styles from "./Typography.module.scss";
 import { ElementType, ReactNode } from "react";
 
-type Size = "04" | "08" | "10" | "16" | "20" | "26" | "30";
+type Size = "04" | "08" | "10" | "14" | "16" | "20" | "26" | "30";
 type Color = "toxic" | "white" | "black";
 
 // Допустимые текстовые теги

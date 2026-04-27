@@ -1,9 +1,7 @@
-  const SelectionPanel = ({ children }: { children: React.ReactNode }) => {
-    return (
-      <div className="selection-panel">
-        {children}
-      </div>
-    );
-  };
+import styles from "./SelectionPanel.module.scss";
 
-  export default SelectionPanel;
+const SelectionPanel = ({ children }: { children: React.ReactNode }) => {
+  return <div className={styles.selectionPanel}>{children}</div>;
+};
+
+export default SelectionPanel;

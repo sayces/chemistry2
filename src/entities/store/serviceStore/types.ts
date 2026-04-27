@@ -1,10 +1,10 @@
 export const services = {
-  manicure: 'маникюр',
-  extensions: 'наращивание',
+  manicure: 'Маникюр',
+  extensions: 'Наращивание',
 } as const;
 
 export type Services = typeof services; // { readonly manic: "маникюр"; readonly increase: "наращивание"; }
 
 export type Service = keyof typeof services; // 'manic' | 'increase' ✅
 
-export type ServiceName = Services[Service]; // "маникюр" | "наращивание"
+export type ServiceName = Services[Service]; // "Маникюр" | "Наращивание"

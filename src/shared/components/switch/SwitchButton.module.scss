@@ -1,21 +1,54 @@
 .switchWrapper {
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff20;
+  border: 1px solid #ffffff20;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+  min-width: 100%;
+  border-radius: 10px;
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 0.5rem 1rem;
-  margin: 1rem;
-  border: 1px solid #ffffff30;
-  border-radius: 10px;
-  background-color: #ffffff30;
-  transition: all 0.1s;
-  width: 100%;
 
-  &:active {
-    transform: scale(0.95);
+  &:hover { background-color: #ffffff38; }
+
+  &.active {
+    background-color: #ffffff52;
+    border-color: #ffffff8c;
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,0.35),
+      inset 0 -1px 1px rgba(0,0,0,0.10),
+      0 0 0 2px rgba(255,255,255,0.18);
+
+    .dot {
+      background: rgba(255,255,255,0.95);
+      transform: scale(1.2);
+      box-shadow: 0 0 4px rgba(255,255,255,0.6);
+    }
   }
 }
 
-.active {
-  background-color: #dbffa069;
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  transform: scale(0);
+  background: rgba(255,255,255,0.4);
+  animation: ripple-out 0.5s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes ripple-out {
+  to { transform: scale(4.5); opacity: 0; }
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  transition: background 0.2s, transform 0.2s;
+  flex-shrink: 0;
 }

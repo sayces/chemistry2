@@ -1,11 +1,13 @@
 'use client';
 
+import { forwardRef } from "react";
 import Image from "next/image";
 import styles from "./Button.module.scss";
 
 interface ButtonProps {
   text?: string;
   onClick?: () => void;
+  onMouseDown?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   onHover?: () => void;
   onLeave?: () => void;
   disabled?: boolean;
@@ -17,9 +19,10 @@ interface ButtonProps {
   style?: React.CSSProperties;
 }
 
-const Button = ({
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   text,
   onClick,
+  onMouseDown,
   onHover,
   onLeave,
   disabled,
@@ -29,35 +32,25 @@ const Button = ({
   children,
   alt,
   style,
-}: ButtonProps) => {
-
-  const onClickHandler = () => {
-    onClick?.()
-  }
-
-  const onMouseEnterHandler = () => {
-    onHover?.()
-  }
-
-  const onMouseLeaveHandler = () => {
-    onLeave?.()
-  }
-
+}, ref) => {
   return (
     <button
-      className={`${styles.button} ${className}`}
-      onClick={onClickHandler}
-      onMouseEnter={onMouseEnterHandler}
-      onMouseLeave={onMouseLeaveHandler}
+      ref={ref}
+      className={`${styles.button} ${className ?? ""}`}
+      onClick={onClick}
+      onMouseDown={onMouseDown}
+      onMouseEnter={onHover}
+      onMouseLeave={onLeave}
       disabled={disabled}
       type={type}
       style={style}
     >
-      {img && <Image src={img} alt={alt || ""} loading="eager" width={20} height={20} />}
+      {img && <Image src={img} alt={alt ?? ""} loading="eager" width={20} height={20} />}
       {text && <p className={styles.label}>{text}</p>}
       {children}
     </button>
   );
-};
+});
 
+Button.displayName = "Button";
 export default Button;
