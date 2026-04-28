@@ -2,28 +2,69 @@
 
 .button {
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
   @include flex-center;
-  background-color: transparent;
-  border: none;
-  padding: 0;
+  background-color: #FFFFFF20;
+
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  
+  
+  
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
   color: inherit;
   -webkit-tap-highlight-color: transparent;
-
-  img {
+  
+  // ↓ дочерние элементы должны быть выше ripple
+  img,
+  p,
+  svg {
     display: block;
+    position: relative;
+    z-index: 1;
   }
-
+  
   &:disabled {
     opacity: 0.4;
     cursor: not-allowed;
     pointer-events: none;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
   }
 }
 
 .label {
   margin: 0;
   font-weight: 400;
+  position: relative; // ← обязательно
+  z-index: 1;         // ← выше ripple
 }
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  transform: scale(0);
+  background: #ffffff30; // ← светлый цвет заметнее на большинстве кнопок
+  animation: ripple-out 0.5s ease-out forwards;
+  pointer-events: none;
+  z-index: 0; // ← под контентом, но в потоке кнопки
+}
+
+@keyframes ripple-out {
+  to { transform: scale(4.5); opacity: 0; }
+}
+

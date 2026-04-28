@@ -45,6 +45,7 @@ const Navigation = () => {
           <li key={item.id} className={styles.navItem}>
             <Link href={item.href}>
               <Button
+                rippleEffect={false} // отключаем риппл для навигационных кнопок
                 img={iconMap[item.id]}
                 alt={item.id}
                 className={styles.navButton}

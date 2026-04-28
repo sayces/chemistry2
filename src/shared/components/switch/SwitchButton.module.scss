@@ -1,6 +1,6 @@
 .switchWrapper {
-  position: relative;
-  overflow: hidden;
+  position: relative; // уже есть в .button, но дублировать не вредно
+  overflow: hidden;   // это нужно оставить — переопределяет контекст для дочерних элементов
   background-color: #ffffff20;
   border: 1px solid #ffffff20;
   transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
@@ -14,8 +14,8 @@
   &:hover { background-color: #ffffff38; }
 
   &.active {
-    background-color: #ffffff52;
-    border-color: #ffffff8c;
+    background-color: #ffffff50;
+    border-color: #ffffff80;
     box-shadow:
       inset 0 1px 1px rgba(255,255,255,0.35),
       inset 0 -1px 1px rgba(0,0,0,0.10),
@@ -27,21 +27,6 @@
       box-shadow: 0 0 4px rgba(255,255,255,0.6);
     }
   }
-}
-
-.ripple {
-  position: absolute;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  transform: scale(0);
-  background: rgba(255,255,255,0.4);
-  animation: ripple-out 0.5s ease-out forwards;
-  pointer-events: none;
-}
-
-@keyframes ripple-out {
-  to { transform: scale(4.5); opacity: 0; }
 }
 
 .dot {

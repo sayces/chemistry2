@@ -1,11 +1,7 @@
-'use client';
-
-import { forwardRef } from "react";
 import Image from "next/image";
 import styles from "./Button.module.scss";
 
 interface ButtonProps {
-  text?: string;
   onClick?: () => void;
   onMouseDown?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   onHover?: () => void;
@@ -17,10 +13,11 @@ interface ButtonProps {
   children?: React.ReactNode;
   alt?: string;
   style?: React.CSSProperties;
+  ref?: React.Ref<HTMLButtonElement>;
+  rippleEffect?: boolean; // добавляем проп для управления рипплом
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
-  text,
+const Button = ({
   onClick,
   onMouseDown,
   onHover,
@@ -32,25 +29,52 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   children,
   alt,
   style,
-}, ref) => {
+  ref,
+  rippleEffect = true, // по умолчанию риппл включен
+}: ButtonProps) => {
+  const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+    if (!rippleEffect) return; // если риппл отключен, не создаем эффект
+    const btn = e.currentTarget;
+    const rect = btn.getBoundingClientRect();
+
+    const ripple = document.createElement("span");
+    ripple.className = styles.ripple;
+    ripple.style.left = `${e.clientX - rect.left - 30}px`;
+    ripple.style.top = `${e.clientY - rect.top - 30}px`;
+
+    btn.appendChild(ripple);
+    ripple.addEventListener("animationend", () => ripple.remove());
+
+    onMouseDown?.(e); // пробрасываем дальше если нужно
+  };
+
   return (
     <button
       ref={ref}
       className={`${styles.button} ${className ?? ""}`}
       onClick={onClick}
-      onMouseDown={onMouseDown}
+      onMouseDown={handleMouseDown} // ← наш обработчик, не проп напрямую
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       disabled={disabled}
       type={type}
       style={style}
     >
-      {img && <Image src={img} alt={alt ?? ""} loading="eager" width={20} height={20} />}
-      {text && <p className={styles.label}>{text}</p>}
+      {img && (
+        <Image
+          src={img}
+          alt={alt ?? ""}
+          loading="eager"
+          width={20}
+          height={20}
+        />
+      )}
+
       {children}
     </button>
   );
-});
+};
 
 Button.displayName = "Button";
 export default Button;

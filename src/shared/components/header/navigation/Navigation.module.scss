@@ -10,6 +10,7 @@
   width: 100%;
   bottom: 2rem;
   top: 2rem;
+  z-index: -10;
 
   @media (min-width: $breakpoint-768) {
     bottom: 100%;
@@ -33,14 +34,23 @@
   filter: drop-shadow(0 0 2px #ffffff30);
   transition: all 0.2s;
   cursor: pointer;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+
 
   &:hover {
     transform: scale(1.1);
+    background-color: transparent;
+    border-color: transparent;
   }
 
   &:active {
     transform: scale(1.1);
-  }
+    background-color: transparent;
+    border-color: transparent;
+  } 
 
   &:focus {
     outline: none;

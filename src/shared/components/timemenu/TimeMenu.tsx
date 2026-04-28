@@ -7,6 +7,7 @@ import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStor
 import { makeDateTime, TIME_SLOTS, TimeSlot } from "./utils/timeSlots";
 import Typography from "../typography/Typography";
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
+import Button from "../button/Button";
 
 interface TimeMenuProps {
   date: Date | null;
@@ -39,13 +40,12 @@ const TimeMenu = ({ date, onClose, onTimeSelect }: TimeMenuProps) => {
       <ul className={styles.timeSlots}>
         {TIME_SLOTS.map((slot) => (
           <li key={slot} className={styles.timeSlot}>
-            <button
-              type="button"
+            <Button
               className={styles.timeSlotButton}
               onClick={() => handleSelectTime(slot)}
             >
               {slot}
-            </button>
+            </Button>
           </li>
         ))}
       </ul>
