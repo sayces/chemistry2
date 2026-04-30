@@ -1,8 +1,6 @@
-'use client'
-
 import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
 import SelectionPanel from "../selectionPanel/SelectionPanel";
-import TimeMenu from "../timeMenu/TimeMenu";
+import TimeMenu from "@/shared/components/timeMenu/TimeMenu";
 import ServiceMenu from "../servicesMenu/ServiceMenu";
 
 const BookingFlow = () => {
