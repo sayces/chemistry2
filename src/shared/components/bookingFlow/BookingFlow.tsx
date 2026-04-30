@@ -1,3 +1,5 @@
+'use client'
+
 import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
 import SelectionPanel from "../selectionPanel/SelectionPanel";
 import TimeMenu from "../timeMenu/TimeMenu";
