@@ -6,7 +6,6 @@ import styles from "./TimeMenu.module.scss";
 import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
 import { makeDateTime, TIME_SLOTS, TimeSlot } from "./utils/timeSlots";
 import Typography from "../typography/Typography";
-import { useClickOutside } from "@/shared/hooks/useClickOutside";
 import Button from "../button/Button";
 
 interface TimeMenuProps {

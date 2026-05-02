@@ -2,17 +2,47 @@ import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStor
 import SelectionPanel from "../selectionPanel/SelectionPanel";
 import TimeMenu from "@/shared/components/timeMenu/TimeMenu";
 import ServiceMenu from "../servicesMenu/ServiceMenu";
+import { useEffect, useRef } from "react";
 
 const BookingFlow = () => {
-  const { selectedDate, selectedTime } = useCalendarStore();
+  const {
+    selectedDate,
+    selectedTime,
+    setDate,
+    setTime,
+    setServices,
+    clearAll,
+  } = useCalendarStore();
 
-  if (!selectedDate) return null;
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
+        console.log("Клик вне формы!");
+        clearAll();
+        setDate(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setDate]);
+
+  if (selectedDate === null) return null;
 
   return (
-    <SelectionPanel>
-      <TimeMenu date={selectedDate} />
-      {selectedTime && <ServiceMenu />}
-    </SelectionPanel>
+    <div ref={wrapperRef}>
+      <SelectionPanel>
+        <TimeMenu date={selectedDate} />
+        {selectedTime && <ServiceMenu />}
+      </SelectionPanel>
+    </div>
   );
 };
 

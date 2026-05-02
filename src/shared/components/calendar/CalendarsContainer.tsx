@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { Calendar } from "@/shared/shadcn/ui/calendar";
 import styles from "./CalendarsContainer.module.scss";
 import { ru } from "date-fns/locale";
@@ -8,68 +8,30 @@ import { useCalendarMonths, formatMonthCaptionRu } from "@/entities/calendar";
 import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
 
 interface CalendarsProps {
-  selectedDate?: Date | null;
-  onSelect?: (date: Date | undefined) => void;
   onMonthChange?: (direction: "prev" | "next") => void;
-  onDatePositionChange?: (
-    position: { anchorX: number; anchorY: number } | null,
-  ) => void;
   children?: React.ReactNode;
 }
 
-const CalendarsContainer = ({
-  selectedDate,
-  onSelect,
-  onMonthChange,
-  onDatePositionChange,
-  children,
-}: CalendarsProps) => {
+const CalendarsContainer = ({ onMonthChange, children }: CalendarsProps) => {
   const { calendars, addPreviousMonth, addNextMonth } = useCalendarMonths();
-  
+  const { selectedDate, setDate } = useCalendarStore();
 
-  const wrapperRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!selectedDate || !wrapperRef.current) {
-      onDatePositionChange?.(null);
+  const handleSelect = (date: Date | undefined) => {
+    if (!date) {
+      setDate(null);
       return;
     }
-
-    const selectedCalendar = calendars.find(
-      (cal) =>
-        cal.year === selectedDate.getFullYear() &&
-        cal.month === selectedDate.getMonth(),
-    );
-    if (!selectedCalendar) {
-      onDatePositionChange?.(null);
+    if (selectedDate && date && date.getTime() === selectedDate.getTime()) {
+      setDate(null);
       return;
     }
+    setDate(date);
+    console.log(selectedDate);
+  };
 
-    const wrapperRect = wrapperRef.current.getBoundingClientRect();
-    const calendarContainer = wrapperRef.current.querySelector(
-      `[data-calendar-id="${selectedCalendar.id}"]`,
-    ) as HTMLElement;
-    if (!calendarContainer) {
-      onDatePositionChange?.(null);
-      return;
-    }
-
-    const calendarRect = calendarContainer.getBoundingClientRect();
-    const anchorY = calendarRect.top - wrapperRect.top;
-
-    const selectedCell = calendarContainer.querySelector(
-      '[data-selected="true"]',
-    ) as HTMLElement;
-    let anchorX: number;
-    if (selectedCell) {
-      const cellRect = selectedCell.getBoundingClientRect();
-      anchorX = cellRect.right - wrapperRect.left;
-    } else {
-      anchorX = calendarRect.right - wrapperRect.left;
-    }
-
-    onDatePositionChange?.({ anchorX, anchorY });
-  }, [selectedDate, calendars]);
+  const handleMenuClose = () => {
+    setDate(null);
+  };
 
   return (
     <div className={styles.calendarsWrapper}>
@@ -97,7 +59,8 @@ const CalendarsContainer = ({
                 <Calendar
                   mode="single"
                   selected={selectedDate || undefined}
-                  onSelect={onSelect}
+                  onSelect={handleSelect}
+                  onDayBlur={handleMenuClose}
                   month={new Date(cal.year, cal.month)}
                   locale={ru}
                   showOutsideDays={false}
