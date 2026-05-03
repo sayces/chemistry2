@@ -29,12 +29,9 @@ const CalendarsContainer = ({ onMonthChange, children }: CalendarsProps) => {
     console.log(selectedDate);
   };
 
-  const handleMenuClose = () => {
-    setDate(null);
-  };
-
   return (
-    <div className={styles.calendarsWrapper}>
+    <div className={styles.calendarsWrapper} data-calendar-container>
+      {/* Добавляем data-атрибут, чтобы BookingFlow знал о календаре */}
       <button
         type="button"
         className={styles.navButton}
@@ -60,7 +57,6 @@ const CalendarsContainer = ({ onMonthChange, children }: CalendarsProps) => {
                   mode="single"
                   selected={selectedDate || undefined}
                   onSelect={handleSelect}
-                  onDayBlur={handleMenuClose}
                   month={new Date(cal.year, cal.month)}
                   locale={ru}
                   showOutsideDays={false}

@@ -3,6 +3,7 @@ import styles from "./ServiceMenu.module.scss";
 import Typography from "../typography/Typography";
 import SwitchButton from "../switch/SwitchButton";
 import { useState } from "react";
+import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
 
 interface ServiceMenuProps {
   onClose?: () => void;
@@ -10,15 +11,14 @@ interface ServiceMenuProps {
 }
 
 const ServiceMenu = ({ onClose, onTimeSelect }: ServiceMenuProps) => {
-  const [selectedService, setSelectedService] = useState<
-    keyof typeof services | null
-  >(null);
+  const {selectedServices, setServices} = useCalendarStore();
 
   const serviceList = Object.entries(services);
 
   const handleServiceChange = (serviceKey: keyof typeof services) => {
-    setSelectedService(serviceKey);
+    setServices(serviceKey);
   };
+  
   return (
     <div className={styles.serviceMenu}>
       <Typography as="h4">Услуги</Typography>
@@ -26,7 +26,7 @@ const ServiceMenu = ({ onClose, onTimeSelect }: ServiceMenuProps) => {
         {serviceList.map(([serviceKey, serviceName]) => (
           <li key={serviceKey} className={styles.serviceItem}>
             <SwitchButton
-              isActive={selectedService === serviceKey}
+              isActive={selectedServices === serviceKey}
               onClick={() => {}}
             >
               {serviceName}

@@ -49,3 +49,10 @@
   flex-flow: column wrap;
   gap: 0.5rem;
 }
+
+.timeSlotButton {
+&.active {
+    background-color: $color-pink-d2;
+    color: white;
+    border-color: #ffffff70;
+  }}

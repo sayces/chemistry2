@@ -18,14 +18,18 @@ const BookingFlow = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(event.target as Node)
-      ) {
-        console.log("Клик вне формы!");
-        clearAll();
-        setDate(null);
+      const target = event.target as HTMLElement;
+
+      if (wrapperRef.current && wrapperRef.current.contains(target)) {
+        return;
       }
+
+      if (target.closest('[data-calendar-container]')) {
+        return;
+      }
+
+      console.log("Клик вне формы и календаря!");
+      clearAll();
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -39,7 +43,7 @@ const BookingFlow = () => {
   return (
     <div ref={wrapperRef}>
       <SelectionPanel>
-        <TimeMenu date={selectedDate} />
+        <TimeMenu />
         {selectedTime && <ServiceMenu />}
       </SelectionPanel>
     </div>
