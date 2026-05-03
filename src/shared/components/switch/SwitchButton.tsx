@@ -7,9 +7,10 @@ interface SwitchProps {
   isActive: boolean;
   children: React.ReactNode;
   onClick?: () => void;
+  className?: string;
 }
 
-const SwitchButton = ({ isActive = false, onClick, children }: SwitchProps) => {
+const SwitchButton = ({ className, isActive = false, onClick, children }: SwitchProps) => {
   const [localChecked, setLocalChecked] = useState(isActive);
 
   const handleChange = () => {
