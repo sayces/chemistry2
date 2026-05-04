@@ -48,7 +48,7 @@ const BookingFlow = () => {
         <TimeMenu />
         {selectedTime && <ServiceMenu />}
       </SelectionPanel>
-      <Button className={styles.bookingButton}>Подтвердить</Button>
+      <Button className={styles.bookingButton} disabled>Подтвердить</Button>
     </div>
   );
 };

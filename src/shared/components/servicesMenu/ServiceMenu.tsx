@@ -18,7 +18,7 @@ const ServiceMenu = ({ onClose, onTimeSelect }: ServiceMenuProps) => {
   const handleServiceChange = (serviceKey: keyof typeof services) => {
     setServices(serviceKey);
   };
-  
+
   return (
     <div className={styles.serviceMenu}>
       <Typography as="h4">Услуги</Typography>

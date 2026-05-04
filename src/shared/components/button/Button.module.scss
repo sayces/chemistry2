@@ -5,7 +5,7 @@
   position: relative;
   overflow: hidden;
   @include flex-center;
-  background-color: #FFFFFF20;
+  background-color: #ffffff20;
 
   width: 100%;
   padding: 0.5rem 1rem;
@@ -13,17 +13,14 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s, border-color 0.2s, opacity 0.2s;
 
-  
-  
-  
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
   color: inherit;
   -webkit-tap-highlight-color: transparent;
-  
+
   // ↓ дочерние элементы должны быть выше ripple
   img,
   p,
@@ -32,7 +29,7 @@
     position: relative;
     z-index: 1;
   }
-  
+
   &:disabled {
     opacity: 0.4;
     cursor: not-allowed;
@@ -43,13 +40,26 @@
     background: rgba(255, 255, 255, 0.15);
     border-color: rgba(255, 255, 255, 0.3);
   }
+
+  &:disabled,
+  &.is-disabled {
+    // Рекомендуется использовать класс для задизейбленного состояния
+    opacity: 0.4;
+    cursor: not-allowed;
+    // УБИРАЕМ pointer-events: none; чтобы кнопка могла "почувствовать" клик
+  }
+
+  // Класс, который будет добавляться при попытке клика
+  &.shake {
+    animation: shake-animation 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  }
 }
 
 .label {
   margin: 0;
   font-weight: 400;
   position: relative; // ← обязательно
-  z-index: 1;         // ← выше ripple
+  z-index: 1; // ← выше ripple
 }
 
 .ripple {
@@ -65,6 +75,23 @@
 }
 
 @keyframes ripple-out {
-  to { transform: scale(4.5); opacity: 0; }
+  to {
+    transform: scale(4.5);
+    opacity: 0;
+  }
 }
 
+@keyframes shake-animation {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-4px);
+  }
+  40%,
+  80% {
+    transform: translateX(4px);
+  }
+}
