@@ -3,6 +3,8 @@ import SelectionPanel from "../selectionPanel/SelectionPanel";
 import TimeMenu from "@/shared/components/timeMenu/TimeMenu";
 import ServiceMenu from "../servicesMenu/ServiceMenu";
 import { useEffect, useRef } from "react";
+import styles from "./BookingFlow.module.scss";
+import Button from "../button/Button";
 
 const BookingFlow = () => {
   const {
@@ -24,7 +26,7 @@ const BookingFlow = () => {
         return;
       }
 
-      if (target.closest('[data-calendar-container]')) {
+      if (target.closest("[data-calendar-container]")) {
         return;
       }
 
@@ -41,11 +43,12 @@ const BookingFlow = () => {
   if (selectedDate === null) return null;
 
   return (
-    <div ref={wrapperRef}>
+    <div ref={wrapperRef} className={styles.bookingFlow}>
       <SelectionPanel>
         <TimeMenu />
         {selectedTime && <ServiceMenu />}
       </SelectionPanel>
+      <Button className={styles.bookingButton}>Подтвердить</Button>
     </div>
   );
 };

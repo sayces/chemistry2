@@ -1,0 +1,15 @@
+@use "@/shared/styles/variables" as *;
+@use "@/shared/styles/theme" as *;
+
+.bookingFlow {
+  margin: 4.5rem 0 0 0;
+  width: 100%;
+  max-width: calc(
+    var(--column-unit) * var(--columns-count) * 2 - var(--column-unit)
+  );
+  
+}
+
+.bookingButton {
+  margin: 2rem 0 0 0; 
+}

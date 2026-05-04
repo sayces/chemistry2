@@ -25,8 +25,6 @@ const TimeMenu = ({ onClose, onTimeSelect }: TimeMenuProps) => {
 
     onTimeSelect?.(date as Date, slot);
     setTime(dateTime);
-
-    return dateTime;
   };
 
   return (
