@@ -1,22 +1,23 @@
-import { services } from "@/entities/store/serviceStore/types";
+import { Service, serviceList } from "@/entities/store/serviceStore/types";
 import styles from "./ServiceMenu.module.scss";
 import Typography from "../typography/Typography";
 import SwitchButton from "../switch/SwitchButton";
 import { useState } from "react";
 import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
 
-interface ServiceMenuProps {
-  onClose?: () => void;
-  onTimeSelect?: (date: Date, time: string) => void;
-}
+interface ServiceMenuProps {}
 
-const ServiceMenu = ({ onClose, onTimeSelect }: ServiceMenuProps) => {
-  const {selectedServices, setServices} = useCalendarStore();
+const ServiceMenu = ({}: ServiceMenuProps) => {
+  const { selectedServices, setServices } = useCalendarStore();
 
-  const serviceList = Object.entries(services);
+  console.log(selectedServices);
 
-  const handleServiceChange = (serviceKey: keyof typeof services) => {
-    setServices(serviceKey);
+  const handleServiceChange = (serviceKey: Service) => {
+    const currentSelected = selectedServices || [];
+    const nextServices = currentSelected.includes(serviceKey)
+      ? currentSelected.filter((id) => id !== serviceKey)
+      : [...currentSelected, serviceKey];
+    setServices(nextServices);
   };
 
   return (
@@ -26,8 +27,8 @@ const ServiceMenu = ({ onClose, onTimeSelect }: ServiceMenuProps) => {
         {serviceList.map(([serviceKey, serviceName]) => (
           <li key={serviceKey} className={styles.serviceItem}>
             <SwitchButton
-              isActive={selectedServices === serviceKey}
-              onClick={() => {}}
+              isActive={selectedServices?.includes(serviceKey) || false}
+              onClick={() => handleServiceChange(serviceKey)}
             >
               {serviceName}
             </SwitchButton>
