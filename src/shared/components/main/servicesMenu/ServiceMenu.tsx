@@ -1,7 +1,7 @@
 import { Service, serviceList } from "@/entities/store/serviceStore/types";
 import styles from "./ServiceMenu.module.scss";
-import Typography from "../typography/Typography";
-import SwitchButton from "../switch/SwitchButton";
+import Typography from "@/shared/components/UI/typography/Typography";
+import SwitchButton from "@/shared/components/UI/switch/SwitchButton";
 import { useState } from "react";
 import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
 

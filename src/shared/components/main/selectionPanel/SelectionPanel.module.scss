@@ -1,0 +1,23 @@
+.selectionPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  
+  // Убедитесь, что сам контейнер имеет ширину
+  width: auto; 
+  min-width: calc(var(--column-unit) * var(--columns-count) * 2 - var(--column-unit));
+  max-width: calc(var(--column-unit) * var(--columns-count) * 2 - var(--column-unit));
+  
+  transition: all 0.2s;
+
+  & > * {
+    background-color: #ffffff05;
+    padding: 1rem;
+    border-radius: 20px;
+    
+    // ИЗМЕНИТЕ ЭТО:
+    width: 100%; // Чтобы motion.div и другие блоки занимали всю ширину панели
+    box-sizing: border-box; // Чтобы padding не раздувал ширину больше 100%
+    box-shadow: 0 0 8px #00000050;
+  }
+}

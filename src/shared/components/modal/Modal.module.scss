@@ -13,9 +13,10 @@
   align-items: center;
   z-index: 20;
 }
+
 .modal {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
   background-color: #ffffff00;
@@ -25,8 +26,14 @@
   border-radius: 20;
   border: 1px solid #ffffff30;
   width: var(--modal-width, 70%);
+  max-width: fit-content;
   min-width: fit-content;
-  height: var(--modal-height, fit-content);
-  top: 2rem;
-  bottom: 1rem;
+  height: var(--modal-height, auto);
+  top: 0rem;
+  bottom: 0rem;
+  transition: all 0.2s;
+
+  & > * {
+    max-width: fit-content;
+  }
 }

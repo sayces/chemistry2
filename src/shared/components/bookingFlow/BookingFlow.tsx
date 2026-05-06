@@ -1,27 +1,29 @@
 "use client";
 
 import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
-import SelectionPanel from "../selectionPanel/SelectionPanel";
-import TimeMenu from "@/shared/components/timeMenu/TimeMenu";
-import ServiceMenu from "../servicesMenu/ServiceMenu";
+import SelectionPanel from "../main/selectionPanel/SelectionPanel";
+import TimeMenu from "@/shared/components/main/timeMenu/TimeMenu";
+import ServiceMenu from "../main/servicesMenu/ServiceMenu";
 import { useEffect, useRef } from "react";
 import styles from "./BookingFlow.module.scss";
-import Button from "../button/Button";
-import { selectIsMobile, usePlatformStore, selectIsTablet } from "@/entities/store/usePlatformStore";
+import Button from "../UI/button/Button";
+import {
+  selectIsMobile,
+  usePlatformStore,
+  selectIsTablet,
+} from "@/entities/store/usePlatformStore";
 import Modal from "../modal/Modal";
+// 1. Импортируем Framer Motion
+import { motion, AnimatePresence } from "framer-motion";
 
-// @/shared/components/bookingFlow/BookingFlow.tsx
 const BookingFlow = () => {
   const { selectedDate, selectedTime, setDate, clearAll } = useCalendarStore();
-
   const isMobile = usePlatformStore(selectIsMobile);
   const isTablet = usePlatformStore(selectIsTablet);
-
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  // Слушатель клика вне для десктопной версии
   useEffect(() => {
-    if (isMobile) return; // На мобилке за клики вне отвечает Modal
+    if (isMobile || isTablet) return;
 
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
@@ -33,32 +35,60 @@ const BookingFlow = () => {
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [setDate, isMobile, clearAll]);
+  }, [isMobile, isTablet, clearAll]);
 
   if (selectedDate === null) return null;
 
-  // Содержимое формы бронирования (чтобы не дублировать код)
+  // 2. Обновляем рендер контента с motion
   const renderFlowContent = () => (
-    <div ref={wrapperRef} className={styles.bookingFlow}>
+    /* layout заставляет контейнер плавно менять высоту */
+    <motion.div
+      layout
+      className={styles.motionWrapper}
+      style={{ display: "flex", flexDirection: "column", width: "100%" }}
+    >
       <SelectionPanel>
-        <TimeMenu />
-        {selectedTime && <ServiceMenu />}
+        <motion.div layout style={{ width: "100%" }}>
+          <TimeMenu />
+        </motion.div>
+
+        <AnimatePresence initial={false}>
+          {selectedTime && (
+            <motion.div
+              key="service-menu"
+              layout
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              style={{
+                overflow: "hidden",
+                width: "100%", // Явно указываем растяжение
+              }}
+            >
+              <ServiceMenu />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </SelectionPanel>
-      <Button className={styles.bookingButton} disabled>
-        Подтвердить
-      </Button>
-    </div>
+
+      <motion.div layout>
+        <Button className={styles.bookingButton} disabled>
+          Подтвердить
+        </Button>
+      </motion.div>
+    </motion.div>
   );
 
-  if (isMobile || isTablet) {
-    return (
-      <Modal isOpen={selectedDate !== null} onClose={clearAll}>
-        {renderFlowContent()}
-      </Modal>
-    );
-  }
-
-  return renderFlowContent();
+  return isMobile || isTablet ? (
+    <Modal isOpen={selectedDate !== null} onClose={clearAll}>
+      {renderFlowContent()}
+    </Modal>
+  ) : (
+    <div ref={wrapperRef} className={styles.bookingFlow}>
+      {renderFlowContent()}
+    </div>
+  );
 };
 
 export default BookingFlow;

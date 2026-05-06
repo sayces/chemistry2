@@ -5,8 +5,8 @@ import { ru } from "date-fns/locale";
 import styles from "./TimeMenu.module.scss";
 import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
 import { makeDateTime, TIME_SLOTS, TimeSlot } from "./utils/timeSlots";
-import Typography from "../typography/Typography";
-import Button from "../button/Button";
+import Typography from "../../UI/typography/Typography";
+import Button from "../../UI/button/Button";
 import { useEffect, useState } from "react";
 
 interface TimeMenuProps {
