@@ -6,7 +6,7 @@ import BookingFlow from "@/shared/components/bookingFlow/BookingFlow";
 const CalendarPage = () => {
   return (
     <Main>
-      <Container>123</Container>
+      <Container>{""}</Container>
       <Container>
         <CalendarsContainer />
       </Container>
