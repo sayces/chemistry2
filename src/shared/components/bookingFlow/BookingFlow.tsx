@@ -13,11 +13,10 @@ import {
   selectIsTablet,
 } from "@/entities/store/usePlatformStore";
 import Modal from "../modal/Modal";
-// 1. Импортируем Framer Motion
 import { motion, AnimatePresence } from "framer-motion";
 
 const BookingFlow = () => {
-  const { selectedDate, selectedTime, setDate, clearAll } = useCalendarStore();
+  const { selectedDate, selectedTime, clearAll } = useCalendarStore();
   const isMobile = usePlatformStore(selectIsMobile);
   const isTablet = usePlatformStore(selectIsTablet);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -37,11 +36,7 @@ const BookingFlow = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMobile, isTablet, clearAll]);
 
-  if (selectedDate === null) return null;
-
-  // 2. Обновляем рендер контента с motion
   const renderFlowContent = () => (
-    /* layout заставляет контейнер плавно менять высоту */
     <motion.div
       layout
       className={styles.motionWrapper}
@@ -63,7 +58,7 @@ const BookingFlow = () => {
               transition={{ duration: 0.3 }}
               style={{
                 overflow: "hidden",
-                width: "100%", // Явно указываем растяжение
+                width: "100%",
               }}
             >
               <ServiceMenu />
@@ -80,14 +75,27 @@ const BookingFlow = () => {
     </motion.div>
   );
 
-  return isMobile || isTablet ? (
-    <Modal isOpen={selectedDate !== null} onClose={clearAll}>
-      {renderFlowContent()}
-    </Modal>
-  ) : (
-    <div ref={wrapperRef} className={styles.bookingFlow}>
-      {renderFlowContent()}
-    </div>
+  return (
+    <AnimatePresence>
+      {selectedDate !== null && (
+        isMobile || isTablet ? (
+          <Modal isOpen={true} onClose={clearAll}>
+            {renderFlowContent()}
+          </Modal>
+        ) : (
+          <motion.div
+            ref={wrapperRef}
+            className={styles.bookingFlow}
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 50 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          >
+            {renderFlowContent()}
+          </motion.div>
+        )
+      )}
+    </AnimatePresence>
   );
 };
 

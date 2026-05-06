@@ -7,9 +7,12 @@ import styles from "./MainRoutesLayout.module.scss";
 const MainRoutesLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className={styles.layoutWrapper}>
-      <Header />
-      {children}  
       <Columns />
+
+      <div className={styles.contentLayer}>
+        <Header />
+        {children}
+      </div>
     </div>
   );
 };

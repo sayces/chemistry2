@@ -1,14 +1,17 @@
 @use "@/shared/styles/theme" as *;
-@use '@/shared/styles/variables' as *;
+@use "@/shared/styles/variables" as *;
 
 .container {
   width: 100%;
-  min-width: 7*$column-unit;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 0;
   padding: 0;
-  min-height: fit-content;
+  // Убрали min-width: 7 * $column-unit — на мобильных ломал горизонтальный скролл
+  
+  @media (min-width: $breakpoint-1024) {
+    min-width: #{7 * $column-unit}; // Оставляем только для десктопа если нужно
+  }
 }

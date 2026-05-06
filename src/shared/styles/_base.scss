@@ -10,17 +10,12 @@
 }
 
 html {
-  // Mobile: 1rem = 10px
   font-size: 10px;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
-  height: 100%;
-  min-height: 100%;
 
-  // Desktop: 1rem = 14px
   @media (min-width: $breakpoint-768) {
     font-size: 14px;
   }
@@ -29,8 +24,7 @@ html {
 body {
   --column-unit: #{$column-unit};
   --columns-count: #{$columns-count};
-  height: 100%;
-  min-height: 100%;
+  min-height: 100%; // Убрали height: 100%
   line-height: 1.5;
   background: $background;
   color: $foreground;
@@ -43,14 +37,9 @@ body {
     sans-serif;
   font-weight: 300;
   font-size: 1rem;
-  // overflow: hidden;
+  overflow-x: hidden;
 }
 
-// ============================================
-// ТИПОГРАФИКА
-// ============================================
-
-// Заголовки наследуют цвет и сбрасывают вес
 h1,
 h2,
 h3,
@@ -82,7 +71,6 @@ h6 {
   font-size: 1.8rem;
 }
 
-// Параграфы и списки
 p,
 ul,
 ol {
@@ -94,7 +82,6 @@ ol {
   list-style: none;
 }
 
-// Ссылки
 a {
   color: inherit;
   text-decoration: none;
@@ -104,10 +91,6 @@ a {
     text-decoration-color: currentColor;
   }
 }
-
-// ============================================
-// МЕДИА И ФОРМЫ
-// ============================================
 
 img,
 picture,
@@ -133,20 +116,11 @@ button {
   border: none;
 }
 
-// ============================================
-// ТАБЛИЦЫ
-// ============================================
-
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-// ============================================
-// ДОСТУПНОСТЬ
-// ============================================
-
-// Уважение prefers-reduced-motion
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -157,14 +131,12 @@ table {
   }
 }
 
-// Фокус для клавиатурной навигации
 :focus-visible {
   outline: 2px solid $color-green-be;
   outline-offset: 2px;
-  border-radius: 0.2;
+  border-radius: 0.2rem;
 }
 
-// Убираем фокус-аутлайн для мыши (опционально)
 :focus:not(:focus-visible) {
   outline: none;
 }
