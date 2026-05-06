@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 2rem;
   width: fit-content;
-  min-width: 100%;
+  min-width: calc(var(--column-unit) * var(--columns-count) * 2 - var(--column-unit));
   max-width: 90%;
   animation: menuPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
   background: rgba(255, 255, 255, 0.00);
@@ -13,6 +13,8 @@
   z-index: 0;
   pointer-events: auto;
   box-shadow: 0 0 8px #00000050;
+  transition: all 0.2s;
+  height: auto;
 
   @keyframes menuPop {
     from {

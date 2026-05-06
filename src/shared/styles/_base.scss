@@ -18,7 +18,7 @@ html {
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
   height: 100%;
-  height: -webkit-fill-available;
+  min-height: 100%;
 
   // Desktop: 1rem = 14px
   @media (min-width: $breakpoint-768) {
@@ -29,10 +29,8 @@ html {
 body {
   --column-unit: #{$column-unit};
   --columns-count: #{$columns-count};
-
+  height: 100%;
   min-height: 100%;
-  min-height: 100dvh;
-  min-height: -webkit-fill-available;
   line-height: 1.5;
   background: $background;
   color: $foreground;

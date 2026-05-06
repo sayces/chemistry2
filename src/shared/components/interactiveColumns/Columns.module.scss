@@ -2,16 +2,17 @@
 @use "@/shared/styles/theme" as *;
 
 .columnsContainer {
-  position: fixed;
+  position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
+  // left:50%;
+  // transform: translate(-50%);
+  bottom: 0;
   display: flex;
   justify-content: center;
   pointer-events: none;
   z-index: 0;
-  height: 100vh;
-  height: 100dvh;
+  min-height: 100vh;
+  height: 100%;
 } 
 
 .columnsInner {
@@ -21,6 +22,6 @@
   gap: var(--column-unit);
   width: calc(var(--column-unit) * var(--columns-count) * 2 - var(--column-unit));
   position: relative;
-  height: 100vh;
-  height: 100dvh;
+  min-height: 100%;
+  height: auto;
 }

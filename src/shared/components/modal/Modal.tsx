@@ -1,34 +1,41 @@
+// @/shared/components/modal/Modal.tsx
 "use client";
 
 import { createPortal } from "react-dom";
 import { useClickOutside } from "@/shared/hooks/useClickOutside";
 import styles from "./Modal.module.scss";
-import { RefObject, useEffect, useRef } from "react";
-import { useModalStore } from "@/entities/store/modal/useModalStore";
+import { useEffect, useRef, useState } from "react";
 
 interface ModalProps {
   children: React.ReactNode;
+  isOpen: boolean;        // Управляется снаружи
+  onClose: () => void;    // Функция закрытия снаружи
   width?: string;
   height?: string;
 }
 
-const Modal = ({ children, width, height }: ModalProps) => {
+const Modal = ({ children, isOpen, onClose, width, height }: ModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
 
-  const { isOpen, closeModal, openModal } = useModalStore(); // забираем isOpen и closeModal
+  // Ждем монтирования на клиенте для корректной работы Portals в Next.js
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useClickOutside(modalRef, () => {
     if (isOpen) {
-      closeModal();
+      onClose();
     }
   });
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
-  return (
+  // Рендерим модалку в body, чтобы избежать проблем с z-index и overflow
+  return createPortal(
     <div
       className={styles.modalBackdrop}
-      onClick={closeModal} // клик по фону тоже закрывает
+      onClick={onClose} // Клик по фону закрывает
     >
       <div
         ref={modalRef}
@@ -39,11 +46,12 @@ const Modal = ({ children, width, height }: ModalProps) => {
             "--modal-height": height,
           } as React.CSSProperties
         }
-        onClick={(e) => e.stopPropagation()} // клик внутри модала не закрывает
+        onClick={(e) => e.stopPropagation()} // Клик внутри не закрывает
       >
         {children}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

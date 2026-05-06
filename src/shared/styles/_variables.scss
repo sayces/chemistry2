@@ -1,9 +1,12 @@
-// ============================================
-// Interactive Columns
-// ============================================
-$column-unit: 4rem;       // Phone screen - Column width = gap between columns
-$columns-count: 4;        // Number of columns
+@use '@/shared/styles/theme' as *;
 
-$column-unit-md: 4.5rem;    // Medium screens
+$column-unit: 4rem;
+$columns-count: 4;
 
-$column-unit-lg: 5rem;
+@media (min-width: $breakpoint-768) {
+  $column-unit: 4.5rem; // Medium screens
+}
+
+@media (min-width: $breakpoint-1024) {
+  $column-unit: 5rem; // Large screens
+}

@@ -7,7 +7,7 @@
   max-width: calc(
     var(--column-unit) * var(--columns-count) * 2 - var(--column-unit)
   );
-  
+  transition: all 0.2s;
 }
 
 .bookingButton {

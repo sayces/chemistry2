@@ -8,8 +8,8 @@ const MainRoutesLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className={styles.layoutWrapper}>
       <Header />
+      {children}  
       <Columns />
-      {children}
     </div>
   );
 };
