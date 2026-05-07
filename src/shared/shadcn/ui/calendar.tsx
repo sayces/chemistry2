@@ -88,12 +88,17 @@ function Calendar({
           defaultClassNames.caption_label
         ),
         table: "w-full border-collapse",
-        weekdays: cn("flex", defaultClassNames.weekdays),
+        
+        // Переводим заголовки дней недели на Grid для Safari
+        weekdays: cn("grid grid-cols-7 w-full", defaultClassNames.weekdays),
         weekday: cn(
-          "flex-1 rounded-(--cell-radius) text-muted-foreground select-none",
+          "text-center rounded-(--cell-radius) text-muted-foreground select-none py-2 text-[0.8rem]",
           defaultClassNames.weekday
         ),
-        week: cn("mt-2 flex w-full", defaultClassNames.week),
+        
+        // Строка недели теперь строго Grid (7 колонок)
+        week: cn("mt-2 grid grid-cols-7 w-full justify-items-center items-center", defaultClassNames.week),
+        
         week_number_header: cn(
           "w-(--cell-size) select-none",
           defaultClassNames.week_number_header
@@ -102,13 +107,17 @@ function Calendar({
           "text-muted-foreground select-none",
           defaultClassNames.week_number
         ),
+        
+        // УБРАНО h-full! Теперь высота ячейки рассчитывается исключительно из её ширины через aspect-square.
+        // Это полностью решает проблему вертикального сжатия на iPhone.
         day: cn(
-          "group/day relative aspect-square h-full w-full rounded-(--cell-radius) p-0 text-center select-none [&:last-child[data-selected=true]_button]:rounded-r-(--cell-radius)",
+          "group/day relative aspect-square w-full rounded-(--cell-radius) p-0 text-center select-none flex items-center justify-center [&:last-child[data-selected=true]_button]:rounded-r-(--cell-radius)",
           props.showWeekNumber
             ? "[&:nth-child(2)[data-selected=true]_button]:rounded-l-(--cell-radius)"
             : "[&:first-child[data-selected=true]_button]:rounded-l-(--cell-radius)",
           defaultClassNames.day
         ),
+        
         range_start: cn(
           "relative isolate z-0 rounded-l-(--cell-radius) bg-muted after:absolute after:inset-y-0 after:right-0 after:w-4 after:bg-muted",
           defaultClassNames.range_start
@@ -196,6 +205,7 @@ function CalendarDayButton({
 
   return (
     <Button
+      ref={ref}
       variant="ghost"
       size="icon"
       data-day={day.date.toLocaleDateString(locale?.code)}
@@ -209,8 +219,9 @@ function CalendarDayButton({
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}
       className={cn(
-        "relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 border-0 leading-none group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50 data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-muted data-[range-middle=true]:text-foreground dark:hover:text-foreground",
-        defaultClassNames.day,
+        // Кнопка идеально заполняет собой квадратную ячейку 100% на 100% и центрирует контент
+        "relative isolate z-10 flex h-full w-full aspect-square items-center justify-center border-0 p-0 leading-none group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50 data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-muted data-[range-middle=true]:text-foreground dark:hover:text-foreground",
+        defaultClassNames.day_button,
         className
       )}
       {...props}
