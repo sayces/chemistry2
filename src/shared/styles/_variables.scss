@@ -1,12 +1,12 @@
 @use '@/shared/styles/theme' as *;
 
-$column-unit: 4rem;
+$column-unit: 5rem;
 $columns-count: 4;
 
 @media (min-width: $breakpoint-768) {
-  $column-unit: 4.5rem; // Medium screens
+  $column-unit: 5.5rem; // Medium screens
 }
 
 @media (min-width: $breakpoint-1024) {
-  $column-unit: 5rem; // Large screens
+  $column-unit: 6rem; // Large screens
 }

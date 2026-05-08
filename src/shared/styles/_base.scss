@@ -17,14 +17,14 @@ html {
   text-rendering: optimizeLegibility;
 
   @media (min-width: $breakpoint-768) {
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 
 body {
   --column-unit: #{$column-unit};
   --columns-count: #{$columns-count};
-  min-height: 100%; // Убрали height: 100%
+  min-height: 100%;
   line-height: 1.5;
   background: $background;
   color: $foreground;

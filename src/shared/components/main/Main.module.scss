@@ -4,16 +4,11 @@
 .main {
   position: relative;
   display: grid;
-  // По умолчанию на мобилках колонки идут друг под другом
   grid-template-columns: 1fr;
-  grid-template-rows: auto auto auto; 
-  
-  // === 1. ИЗМЕНЕНИЯ ЗДЕСЬ ===
+  grid-template-rows: auto auto auto;
   align-items: stretch; // ЗАМЕНИЛИ start на stretch, чтобы колонки тянулись вниз
-  flex-grow: 1;         // Заставляет Main занять всю высоту LayoutWrapper
-  min-height: 100%;     // Гарантирует высоту не меньше экрана
-  // =========================
-
+  flex-grow: 1; // Заставляет Main занять всю высоту LayoutWrapper
+  min-height: 100%; // Гарантирует высоту не меньше экрана
   justify-content: center;
   width: 100%;
   gap: 1rem;
@@ -21,12 +16,7 @@
   padding: 0;
 
   @media (min-width: $breakpoint-1024) {
-    // На десктопе
     grid-template-columns: 1fr #{7 * $column-unit} 1fr;
-    
-    // === 2. ВОЗВРАЩАЕМ 1fr ===
-    // Теперь, когда скролл работает на LayoutWrapper, мы можем вернуть 1fr.
-    // Это заставит строки быть ВЫСОТОЙ НА ВЕСЬ ЭКРАН (и расти дальше, если контента много)
-    grid-template-rows: 1fr; 
+    grid-template-rows: 1fr;
   }
 }
