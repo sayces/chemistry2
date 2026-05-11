@@ -12,7 +12,7 @@ import {
   usePlatformStore,
   selectIsTablet,
 } from "@/entities/store/usePlatformStore";
-import Modal from "../modal/Modal";
+import Modal from "../../../widgets/modal/Modal";
 import { motion, AnimatePresence } from "framer-motion";
 
 const BookingFlow = () => {
