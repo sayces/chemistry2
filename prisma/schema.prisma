@@ -21,10 +21,11 @@ model User {
 }
 
 model Slot {
-  id       String @id @default(uuid())
-  time     String @unique
+  id String @id @default(uuid())
+
+  dateTime DateTime
   clientId String
-  client   User   @relation(fields: [clientId], references: [id])
+  client   User     @relation(fields: [clientId], references: [id])
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

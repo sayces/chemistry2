@@ -606,7 +606,7 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const SlotScalarFieldEnum = {
   id: 'id',
-  time: 'time',
+  dateTime: 'dateTime',
   clientId: 'clientId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

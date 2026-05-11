@@ -20,6 +20,13 @@ const userData: Prisma.UserCreateInput[] = [
     fullname: "Sasha",
     email: "sayces@mail.ru",
     password: "9410",
+    slots: {
+      create: [
+        {
+          dateTime: new Date("2024-05-11T19:54:00Z"),
+        },
+      ],
+    },
   },
 ];
 
@@ -29,4 +36,11 @@ export async function main() {
   }
 }
 
-main();
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

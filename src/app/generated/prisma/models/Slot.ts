@@ -26,7 +26,7 @@ export type AggregateSlot = {
 
 export type SlotMinAggregateOutputType = {
   id: string | null
-  time: string | null
+  dateTime: Date | null
   clientId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -34,7 +34,7 @@ export type SlotMinAggregateOutputType = {
 
 export type SlotMaxAggregateOutputType = {
   id: string | null
-  time: string | null
+  dateTime: Date | null
   clientId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -42,7 +42,7 @@ export type SlotMaxAggregateOutputType = {
 
 export type SlotCountAggregateOutputType = {
   id: number
-  time: number
+  dateTime: number
   clientId: number
   createdAt: number
   updatedAt: number
@@ -52,7 +52,7 @@ export type SlotCountAggregateOutputType = {
 
 export type SlotMinAggregateInputType = {
   id?: true
-  time?: true
+  dateTime?: true
   clientId?: true
   createdAt?: true
   updatedAt?: true
@@ -60,7 +60,7 @@ export type SlotMinAggregateInputType = {
 
 export type SlotMaxAggregateInputType = {
   id?: true
-  time?: true
+  dateTime?: true
   clientId?: true
   createdAt?: true
   updatedAt?: true
@@ -68,7 +68,7 @@ export type SlotMaxAggregateInputType = {
 
 export type SlotCountAggregateInputType = {
   id?: true
-  time?: true
+  dateTime?: true
   clientId?: true
   createdAt?: true
   updatedAt?: true
@@ -149,7 +149,7 @@ export type SlotGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type SlotGroupByOutputType = {
   id: string
-  time: string
+  dateTime: Date
   clientId: string
   createdAt: Date
   updatedAt: Date
@@ -178,7 +178,7 @@ export type SlotWhereInput = {
   OR?: Prisma.SlotWhereInput[]
   NOT?: Prisma.SlotWhereInput | Prisma.SlotWhereInput[]
   id?: Prisma.StringFilter<"Slot"> | string
-  time?: Prisma.StringFilter<"Slot"> | string
+  dateTime?: Prisma.DateTimeFilter<"Slot"> | Date | string
   clientId?: Prisma.StringFilter<"Slot"> | string
   createdAt?: Prisma.DateTimeFilter<"Slot"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Slot"> | Date | string
@@ -187,7 +187,7 @@ export type SlotWhereInput = {
 
 export type SlotOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  time?: Prisma.SortOrder
+  dateTime?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -196,19 +196,19 @@ export type SlotOrderByWithRelationInput = {
 
 export type SlotWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  time?: string
   AND?: Prisma.SlotWhereInput | Prisma.SlotWhereInput[]
   OR?: Prisma.SlotWhereInput[]
   NOT?: Prisma.SlotWhereInput | Prisma.SlotWhereInput[]
+  dateTime?: Prisma.DateTimeFilter<"Slot"> | Date | string
   clientId?: Prisma.StringFilter<"Slot"> | string
   createdAt?: Prisma.DateTimeFilter<"Slot"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Slot"> | Date | string
   client?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id" | "time">
+}, "id">
 
 export type SlotOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  time?: Prisma.SortOrder
+  dateTime?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -222,7 +222,7 @@ export type SlotScalarWhereWithAggregatesInput = {
   OR?: Prisma.SlotScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SlotScalarWhereWithAggregatesInput | Prisma.SlotScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Slot"> | string
-  time?: Prisma.StringWithAggregatesFilter<"Slot"> | string
+  dateTime?: Prisma.DateTimeWithAggregatesFilter<"Slot"> | Date | string
   clientId?: Prisma.StringWithAggregatesFilter<"Slot"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Slot"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Slot"> | Date | string
@@ -230,7 +230,7 @@ export type SlotScalarWhereWithAggregatesInput = {
 
 export type SlotCreateInput = {
   id?: string
-  time: string
+  dateTime: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   client: Prisma.UserCreateNestedOneWithoutSlotsInput
@@ -238,7 +238,7 @@ export type SlotCreateInput = {
 
 export type SlotUncheckedCreateInput = {
   id?: string
-  time: string
+  dateTime: Date | string
   clientId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -246,7 +246,7 @@ export type SlotUncheckedCreateInput = {
 
 export type SlotUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  time?: Prisma.StringFieldUpdateOperationsInput | string
+  dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.UserUpdateOneRequiredWithoutSlotsNestedInput
@@ -254,7 +254,7 @@ export type SlotUpdateInput = {
 
 export type SlotUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  time?: Prisma.StringFieldUpdateOperationsInput | string
+  dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -262,7 +262,7 @@ export type SlotUncheckedUpdateInput = {
 
 export type SlotCreateManyInput = {
   id?: string
-  time: string
+  dateTime: Date | string
   clientId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -270,14 +270,14 @@ export type SlotCreateManyInput = {
 
 export type SlotUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  time?: Prisma.StringFieldUpdateOperationsInput | string
+  dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SlotUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  time?: Prisma.StringFieldUpdateOperationsInput | string
+  dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -295,7 +295,7 @@ export type SlotOrderByRelationAggregateInput = {
 
 export type SlotCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  time?: Prisma.SortOrder
+  dateTime?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -303,7 +303,7 @@ export type SlotCountOrderByAggregateInput = {
 
 export type SlotMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  time?: Prisma.SortOrder
+  dateTime?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -311,7 +311,7 @@ export type SlotMaxOrderByAggregateInput = {
 
 export type SlotMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  time?: Prisma.SortOrder
+  dateTime?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -361,14 +361,14 @@ export type SlotUncheckedUpdateManyWithoutClientNestedInput = {
 
 export type SlotCreateWithoutClientInput = {
   id?: string
-  time: string
+  dateTime: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SlotUncheckedCreateWithoutClientInput = {
   id?: string
-  time: string
+  dateTime: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -404,7 +404,7 @@ export type SlotScalarWhereInput = {
   OR?: Prisma.SlotScalarWhereInput[]
   NOT?: Prisma.SlotScalarWhereInput | Prisma.SlotScalarWhereInput[]
   id?: Prisma.StringFilter<"Slot"> | string
-  time?: Prisma.StringFilter<"Slot"> | string
+  dateTime?: Prisma.DateTimeFilter<"Slot"> | Date | string
   clientId?: Prisma.StringFilter<"Slot"> | string
   createdAt?: Prisma.DateTimeFilter<"Slot"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Slot"> | Date | string
@@ -412,28 +412,28 @@ export type SlotScalarWhereInput = {
 
 export type SlotCreateManyClientInput = {
   id?: string
-  time: string
+  dateTime: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SlotUpdateWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  time?: Prisma.StringFieldUpdateOperationsInput | string
+  dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SlotUncheckedUpdateWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  time?: Prisma.StringFieldUpdateOperationsInput | string
+  dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SlotUncheckedUpdateManyWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  time?: Prisma.StringFieldUpdateOperationsInput | string
+  dateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -442,7 +442,7 @@ export type SlotUncheckedUpdateManyWithoutClientInput = {
 
 export type SlotSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  time?: boolean
+  dateTime?: boolean
   clientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -451,7 +451,7 @@ export type SlotSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 
 export type SlotSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  time?: boolean
+  dateTime?: boolean
   clientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -460,7 +460,7 @@ export type SlotSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 
 export type SlotSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  time?: boolean
+  dateTime?: boolean
   clientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -469,13 +469,13 @@ export type SlotSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 
 export type SlotSelectScalar = {
   id?: boolean
-  time?: boolean
+  dateTime?: boolean
   clientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SlotOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "time" | "clientId" | "createdAt" | "updatedAt", ExtArgs["result"]["slot"]>
+export type SlotOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dateTime" | "clientId" | "createdAt" | "updatedAt", ExtArgs["result"]["slot"]>
 export type SlotInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -493,7 +493,7 @@ export type $SlotPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    time: string
+    dateTime: Date
     clientId: string
     createdAt: Date
     updatedAt: Date
@@ -922,7 +922,7 @@ export interface Prisma__SlotClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface SlotFieldRefs {
   readonly id: Prisma.FieldRef<"Slot", 'String'>
-  readonly time: Prisma.FieldRef<"Slot", 'String'>
+  readonly dateTime: Prisma.FieldRef<"Slot", 'DateTime'>
   readonly clientId: Prisma.FieldRef<"Slot", 'String'>
   readonly createdAt: Prisma.FieldRef<"Slot", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Slot", 'DateTime'>
