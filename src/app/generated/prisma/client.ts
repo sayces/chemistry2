@@ -46,3 +46,8 @@ export { Prisma }
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Slot
+ * 
+ */
+export type Slot = Prisma.SlotModel
