@@ -1,18 +1,18 @@
 "use client";
 
 import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
-import SelectionPanel from "../main/selectionPanel/SelectionPanel";
+import SelectionPanel from "../../../shared/components/main/selectionPanel/SelectionPanel";
 import TimeMenu from "@/shared/components/main/timeMenu/TimeMenu";
-import ServiceMenu from "../main/servicesMenu/ServiceMenu";
+import ServiceMenu from "../../../shared/components/main/servicesMenu/ServiceMenu";
 import { useEffect, useRef } from "react";
 import styles from "./BookingFlow.module.scss";
-import Button from "../UI/button/Button";
+import Button from "../../../shared/components/UI/button/Button";
 import {
   selectIsMobile,
   usePlatformStore,
   selectIsTablet,
 } from "@/entities/store/usePlatformStore";
-import Modal from "../../../widgets/modal/Modal";
+import Modal from "../../ui/modal/Modal";
 import { motion, AnimatePresence } from "framer-motion";
 
 const BookingFlow = () => {
