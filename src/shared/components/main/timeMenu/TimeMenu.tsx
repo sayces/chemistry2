@@ -2,11 +2,11 @@
 
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
-import styles from "./TimeMenu.module.scss";
+import styles from "@/shared/components/main/timeMenu/TimeMenu.module.scss";
 import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
 import { makeDateTime, TIME_SLOTS, TimeSlot } from "./utils/timeSlots";
-import Typography from "../../UI/typography/Typography";
-import Button from "../../UI/button/Button";
+import Typography from "@/shared/components/ui-kit/typography/Typography";
+import Button from "@/shared/components/ui-kit/button/Button";
 import { useEffect, useState } from "react";
 
 interface TimeMenuProps {

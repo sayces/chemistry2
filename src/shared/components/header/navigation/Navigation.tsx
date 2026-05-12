@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Button from "../../UI/button/Button";
+import Button from "../../ui-kit/button/Button";
 import { calendarIcon } from "@/shared/assets/icons/calendar";
 import { mapIcon } from "@/shared/assets/icons/map";
 import { galleryIcon } from "@/shared/assets/icons/gallery";

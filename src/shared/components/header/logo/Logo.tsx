@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Typography from "@/shared/components/UI/typography/Typography";
+import Typography from "@/shared/components/ui-kit/typography/Typography";
 import { usePathname } from "next/navigation";
 import { useNavigationStore, navItems } from "@/entities/store/useNavigationStore";
 import styles from "./Logo.module.scss";
