@@ -1,28 +1,45 @@
 @use "@/shared/styles/theme" as *;
+@use "@/shared/styles/variables" as *;
 
 .header {
   position: relative;
+  min-height: auto;
+  pointer-events: auto;
+  margin: 0 0 1rem 0;
+  align-items: center;
+  flex-direction: column;
   width: 100%;
-  min-height: 10rem;
-  z-index: 10;
-  pointer-events: none;
-  margin: 0;
-  padding: 2rem 0 0 0;
-  > * {
-    pointer-events: auto;
+  display: flex;
+  justify-content: center;
+
+  @media (min-width: $breakpoint-768) {
+    align-items: baseline;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    /* Side columns won't affect center placement */
+    
+    & > *:first-child {
+      justify-self: end; /* or end, depending on your layout */
+    }
+
+    & > *:last-child {
+      justify-self: start; /* logo to the right */
+    }
   }
 }
 
 .logo {
-  width: fit-content;
-  position: relative;
-  left: 50%;
-  top: 0;
-  transform: translate(-50%);
+  min-width: 0;
+  overflow: hidden;
 
   @media (min-width: $breakpoint-768) {
-    left: 1rem;
-    top: 1rem;
-    transform: translate(0);
+    line-height: auto;
+    padding: 0 1rem 0 0;
+    display: block;
+    margin: 0 0 0 auto;
+
+    h1 {
+      font-size: clamp(1rem, 4vw, 3rem);
+    }
   }
 }

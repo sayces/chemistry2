@@ -1,22 +1,16 @@
 @use "@/shared/styles/theme" as *;
 
 .nav {
-  position: sticky;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: end;
   list-style: none;
   gap: var(--column-unit);
-  width: 100%;
-  bottom: 2rem;
-  top: 2rem;
-  z-index: -10;
+  width: fit-content;
 
   @media (min-width: $breakpoint-768) {
-    bottom: 100%;
-    left: 50%;
-    top: 2rem;
-    transform: translate(0);
+    
   }
        
 }
