@@ -40,7 +40,6 @@ const BookingFlow = () => {
     <motion.div
       layout
       className={styles.motionWrapper}
-      style={{ display: "flex", flexDirection: "column", width: "100%" }}
     >
       <SelectionPanel>
         <motion.div layout style={{ width: "100%" }}>

@@ -2,10 +2,11 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  
+  justify-content: center;
+  align-items: center;
   // Убедитесь, что сам контейнер имеет ширину
-  width: auto; 
-  min-width: calc(var(--column-unit) * var(--columns-count) * 2 - var(--column-unit));
+  width: 100%;   
+  min-width: 20rem;
   max-width: calc(var(--column-unit) * var(--columns-count) * 2 - var(--column-unit));
   
   transition: all 0.2s;
@@ -16,7 +17,7 @@
     border-radius: 20px;
     
     // ИЗМЕНИТЕ ЭТО:
-    width: 100%; // Чтобы motion.div и другие блоки занимали всю ширину панели
+    width: auto; // Чтобы motion.div и другие блоки занимали всю ширину панели
     box-sizing: border-box; // Чтобы padding не раздувал ширину больше 100%
     box-shadow: 0 0 8px #00000050;
   }

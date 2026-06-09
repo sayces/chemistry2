@@ -2,15 +2,21 @@
 @use "@/shared/styles/theme" as *;
 
 .bookingFlow {
-  margin: 2rem 1rem;
-  width: fit-content;
-  max-width: calc(
-    var(--column-unit) * var(--columns-count) * 2 - var(--column-unit)
-  );
+  width: 90%;
+  max-width: 90%;
+  min-width: 20rem;
   overflow: hidden; /* Предотвращает появление горизонтального скролла при анимации выезда */
 }
 
 .bookingButton {
   margin: 2rem 0 0 0;
   font-size: 1.5rem;
+}
+
+.motionWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
 }

@@ -15,8 +15,14 @@
   margin: 0;
   padding: 0;
 
+  // each grid elem
+
   @media (min-width: $breakpoint-1024) {
     grid-template-columns: 1fr #{7 * $column-unit} 1fr;
     grid-template-rows: 1fr;
+    
+    & > * {
+      max-width: #{7 * $column-unit};
+    }
   }
 }
