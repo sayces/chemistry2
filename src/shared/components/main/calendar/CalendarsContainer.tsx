@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useRef, useEffect, useCallback } from "react";
 import { Calendar } from "@/shared/shadcn/ui/calendar";
 import styles from "./CalendarsContainer.module.scss";
 import { ru } from "date-fns/locale";
 import { useCalendarMonths, formatMonthCaptionRu } from "@/entities/calendar";
 import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
+import { getElementCoordinates } from "./utils/getElementCoordinates";
 
 interface CalendarsProps {
   onMonthChange?: (direction: "prev" | "next") => void;
   children?: React.ReactNode;
+  choosenCellCoordinates?: {};
 }
 
 const CalendarsContainer = ({ onMonthChange, children }: CalendarsProps) => {
@@ -54,6 +55,12 @@ const CalendarsContainer = ({ onMonthChange, children }: CalendarsProps) => {
             >
               <div className={styles.calendar}>
                 <Calendar
+                  onDayClick={(day, modifier, e) => {
+                    const coords = getElementCoordinates(
+                      e.currentTarget as HTMLElement,
+                    );
+                    console.log("Координаты кнопки:", coords.top);
+                  }}
                   mode="single"
                   selected={selectedDate || undefined}
                   onSelect={handleSelect}
