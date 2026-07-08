@@ -5,7 +5,8 @@ import styles from "./CalendarsContainer.module.scss";
 import { ru } from "date-fns/locale";
 import { useCalendarMonths, formatMonthCaptionRu } from "@/entities/calendar";
 import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
-import { getElementCoordinates } from "./utils/getElementCoordinates";
+import { useAnchor } from "./utils/useAnchor";
+import { useEffect } from "react";
 
 interface CalendarsProps {
   onMonthChange?: (direction: "prev" | "next") => void;
@@ -15,7 +16,8 @@ interface CalendarsProps {
 
 const CalendarsContainer = ({ onMonthChange, children }: CalendarsProps) => {
   const { calendars, addPreviousMonth, addNextMonth } = useCalendarMonths();
-  const { selectedDate, setDate } = useCalendarStore();
+  const { setDate, selectedDate, setAnchor, selectedAnchor } = useCalendarStore();
+  const { anchor, setAnchorFromEvent } = useAnchor();
 
   const handleSelect = (date: Date | undefined) => {
     if (!date) {
@@ -27,8 +29,9 @@ const CalendarsContainer = ({ onMonthChange, children }: CalendarsProps) => {
       return;
     }
     setDate(date);
-    console.log(selectedDate);
   };
+
+  useEffect(() => setAnchor(anchor), [selectedDate]);
 
   return (
     <div className={styles.calendarsWrapper} data-calendar-container>
@@ -56,10 +59,7 @@ const CalendarsContainer = ({ onMonthChange, children }: CalendarsProps) => {
               <div className={styles.calendar}>
                 <Calendar
                   onDayClick={(day, modifier, e) => {
-                    const coords = getElementCoordinates(
-                      e.currentTarget as HTMLElement,
-                    );
-                    console.log("Координаты кнопки:", coords.top);
+                    setAnchorFromEvent(e as React.MouseEvent<HTMLElement>);
                   }}
                   mode="single"
                   selected={selectedDate || undefined}

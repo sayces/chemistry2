@@ -1,33 +1,35 @@
 import clsx from "clsx";
 import styles from "./UmbicialLine.module.scss";
+import { Anchor } from "../../main/calendar/utils/useAnchor";
 
 interface UmbicialProps {
-  side: "left" | "right";
-  start: { anchorX: number; anchorY: number };
+  side?: "left" | "right";
+  start: Anchor | null;
+  end: Anchor | null;
 }
 
-const PANEL_GAP = 56; // должен совпадать с отступом панели
+const UmbicialLine = ({ start, side = "right", end }: UmbicialProps) => {
+  if (!start || !end) return null;
 
-const UmbicialLine = ({ start, side }: UmbicialProps) => {
-  const { anchorX, anchorY } = start;
+  const startY = start.top;
+  const startX =
+    side === "right"
+      ? start.left
+      : start.left + start.width;
 
-  const lineStyles =
-    side === "left"
-      ? {
-          top: `${anchorY}px`,
-          left: `-${PANEL_GAP}px`,
-          width: `${anchorX + PANEL_GAP}px`,
-        }
-      : {
-          top: `${anchorY}px`,
-          left: `${anchorX}px`,
-          width: `calc(100% - ${anchorX}px + ${PANEL_GAP}px)`,
-        };
+  const endX = side === "right" ? end.left : end.left + end.width;
+
+  const left = Math.min(startX, endX);
+  const width = Math.abs(endX - startX);
 
   return (
     <div
       className={clsx(styles.umbilicalLine, styles[`side_${side}`])}
-      style={lineStyles}
+      style={{
+        top: `${startY}px`,
+        left: `${left}px`,
+        width: `${width}px`,
+      }}
     />
   );
 };

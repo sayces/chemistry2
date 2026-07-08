@@ -5,13 +5,12 @@
   width: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   margin: 0;
   padding: 0;
   
   @media (min-width: $breakpoint-1024) {
     min-width: 10rem;
-
   }
 }

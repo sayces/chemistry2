@@ -9,6 +9,7 @@
   align-self: stretch;
   overflow: hidden;
   z-index: 10;
+  max-width: calc(100vw / 7);
 
   background-image: linear-gradient(
     to bottom,

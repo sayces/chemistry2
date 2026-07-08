@@ -5,7 +5,10 @@
   width: 90%;
   max-width: 90%;
   min-width: 20rem;
-  overflow: hidden; /* Предотвращает появление горизонтального скролла при анимации выезда */
+  overflow: hidden;
+  position: sticky;
+  margin: 5rem 0 0 0;
+  top: 5rem;
 }
 
 .bookingButton {
