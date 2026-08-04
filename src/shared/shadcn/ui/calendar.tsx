@@ -92,17 +92,30 @@ function CalendarDayButton({
   const defaultClassNames = getDefaultClassNames();
 
   const ref = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (modifiers.focused) ref.current?.focus();
+  }, [modifiers.focused]);
 
   return (
     <Button
       ref={ref}
-      variant="default"
+      variant="ghost"
       size="icon"
       data-day={day.date.toLocaleDateString(locale?.code)}
+      data-calendar-day={day.date.toISOString().slice(0, 10)}
+      data-selected-single={
+        modifiers.selected &&
+        !modifiers.range_start &&
+        !modifiers.range_end &&
+        !modifiers.range_middle
+      }
+      data-range-start={modifiers.range_start}
+      data-range-end={modifiers.range_end}
+      data-range-middle={modifiers.range_middle}
       className={cn(
-        "flex h-full w-full aspect-square items-center justify-center",
+        "relative isolate z-10 flex h-full w-full aspect-square items-center justify-center border-0 p-0 leading-none group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50 data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-muted data-[range-middle=true]:text-foreground dark:hover:text-foreground",
         defaultClassNames.day_button,
-        className,
+        className
       )}
       {...props}
     />

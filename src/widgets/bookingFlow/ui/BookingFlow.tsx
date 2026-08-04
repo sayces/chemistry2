@@ -1,90 +1,74 @@
 "use client";
 
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
 import { useCalendarStore } from "@/entities/store/calendarStore/useCalendarStore";
+import {
+  selectIsMobile,
+  selectIsTablet,
+  usePlatformStore,
+} from "@/entities/store/usePlatformStore";
+
 import SelectionPanel from "@/shared/components/main/selectionPanel/SelectionPanel";
 import TimeMenu from "@/shared/components/main/timeMenu/TimeMenu";
 import ServiceMenu from "@/shared/components/main/servicesMenu/ServiceMenu";
-import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
-import styles from "./BookingFlow.module.scss";
-import Button from "@/shared/components/ui-kit/button/Button";
-import {
-  selectIsMobile,
-  usePlatformStore,
-  selectIsTablet,
-} from "@/entities/store/usePlatformStore";
 import Modal from "@/shared/components/modal/Modal";
-import { motion, AnimatePresence } from "framer-motion";
+import Button from "@/shared/components/ui-kit/button/Button";
 import UmbicialLine from "@/shared/components/floatingPanel/umbicialLine/UmbicialLine";
-import { useAnchor } from "@/shared/components/main/calendar/utils/useAnchor";
+import { useLiveAnchor } from "@/shared/components/main/calendar/utils/useLiveAnchor";
+
+import styles from "./BookingFlow.module.scss";
 
 const BookingFlow = () => {
   const selectedDate = useCalendarStore((state) => state.selectedDate);
   const selectedTime = useCalendarStore((state) => state.selectedTime);
   const clearAll = useCalendarStore((state) => state.clearAll);
-  const selectedAnchor = useCalendarStore((state) => state.selectedAnchor);
 
   const isMobile = usePlatformStore(selectIsMobile);
   const isTablet = usePlatformStore(selectIsTablet);
+  const isDesktop = !isMobile && !isTablet;
 
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const panelRef = useRef<HTMLDivElement>(null);
+  const panelSlotRef = useRef<HTMLDivElement>(null);
 
-  const {
-    anchor: panelAnchor,
-    setAnchorFromElement,
-    resetAnchor,
-  } = useAnchor();
+  const selectedDayKey = useMemo(() => {
+    return selectedDate ? selectedDate.toISOString().slice(0, 10) : null;
+  }, [selectedDate]);
 
-  const updatePanelAnchor = useCallback(() => {
-    if (!panelRef.current) return;
-    setAnchorFromElement(panelRef.current);
-  }, [setAnchorFromElement]);
+  const getSelectedDayElement = useCallback(() => {
+    if (!selectedDayKey) return null;
 
-  useLayoutEffect(() => {
-    if (!selectedDate) {
-      resetAnchor();
-      return;
-    }
+    return document.querySelector(
+      `[data-calendar-day="${selectedDayKey}"]`,
+    ) as HTMLElement | null;
+  }, [selectedDayKey]);
 
-    const element = panelRef.current;
-    if (!element) return;
+  const getPanelSlotElement = useCallback(() => {
+    return panelSlotRef.current;
+  }, []);
 
-    let frameId = 0;
+  const { anchor: startAnchor, remeasure: remeasureStart } = useLiveAnchor(
+    getSelectedDayElement,
+    Boolean(selectedDate) && isDesktop,
+  );
 
-    const scheduleUpdate = () => {
-      cancelAnimationFrame(frameId);
-      frameId = requestAnimationFrame(() => {
-        updatePanelAnchor();
-      });
-    };
+  const { anchor: endAnchor, remeasure: remeasureEnd } = useLiveAnchor(
+    getPanelSlotElement,
+    Boolean(selectedDate) && isDesktop,
+  );
 
-    updatePanelAnchor();
-
-    const resizeObserver = new ResizeObserver(() => {
-      scheduleUpdate();
-    });
-
-    resizeObserver.observe(element);
-
-    window.addEventListener("resize", scheduleUpdate);
-    window.addEventListener("scroll", scheduleUpdate, true);
-
-    return () => {
-      cancelAnimationFrame(frameId);
-      resizeObserver.disconnect();
-      window.removeEventListener("resize", scheduleUpdate);
-      window.removeEventListener("scroll", scheduleUpdate, true);
-    };
-  }, [selectedDate, updatePanelAnchor, resetAnchor]);
-
-  const umbicialLineStart = selectedDate ? selectedAnchor : null;
-  const umbicialLineEnd = selectedDate ? panelAnchor : null;
+  const remeasureLine = useCallback(() => {
+    remeasureStart();
+    remeasureEnd();
+  }, [remeasureStart, remeasureEnd]);
 
   useEffect(() => {
-    if (isMobile || isTablet) return;
+    if (!isDesktop) return;
 
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
+
       if (wrapperRef.current && wrapperRef.current.contains(target)) return;
       if (target.closest("[data-calendar-container]")) return;
 
@@ -93,31 +77,95 @@ const BookingFlow = () => {
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isMobile, isTablet, clearAll]);
+  }, [isDesktop, clearAll]);
 
-  const renderFlowContent = () => (
+  const renderDesktopFlowContent = () => (
     <motion.div
       layout
       className={styles.motionWrapper}
-      onLayoutAnimationComplete={updatePanelAnchor}
+      onLayoutAnimationComplete={remeasureLine}
     >
-      <UmbicialLine start={umbicialLineStart} end={umbicialLineEnd} />
+      <UmbicialLine
+        start={startAnchor}
+        end={endAnchor}
+        side="right"
+        inset={0}
+      />
 
-      <SelectionPanel ref={panelRef}>
-        <motion.div layout style={{ width: "100%" }}>
-          <TimeMenu />
+      <div
+        ref={panelSlotRef}
+        style={{
+          position: "relative",
+          width: "100%",
+        }}
+      >
+        <motion.div
+          initial={{
+            opacity: 0,
+            clipPath: "inset(0 100% 0 0 round 24px)",
+          }}
+          animate={{
+            opacity: 1,
+            clipPath: "inset(0 0% 0 0 round 24px)",
+          }}
+          exit={{
+            opacity: 0,
+            clipPath: "inset(0 100% 0 0 round 24px)",
+          }}
+          transition={{
+            duration: 0.22,
+            delay: 0.06,
+          }}
+          onAnimationComplete={remeasureLine}
+        >
+          <SelectionPanel>
+            <TimeMenu />
+
+            <AnimatePresence initial={false}>
+              {selectedTime && (
+                <motion.div
+                  key="service-menu"
+                  layout
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  onAnimationComplete={remeasureLine}
+                  style={{
+                    overflow: "hidden",
+                    width: "100%",
+                  }}
+                >
+                  <ServiceMenu />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </SelectionPanel>
         </motion.div>
+      </div>
+
+      <motion.div layout>
+        <Button className={styles.bookingButton} disabled>
+          Подтвердить
+        </Button>
+      </motion.div>
+    </motion.div>
+  );
+
+  const renderMobileFlowContent = () => (
+    <motion.div layout className={styles.motionWrapper}>
+      <SelectionPanel>
+        <TimeMenu />
 
         <AnimatePresence initial={false}>
           {selectedTime && (
             <motion.div
-              key="service-menu"
+              key="service-menu-mobile"
               layout
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              onAnimationComplete={updatePanelAnchor}
               style={{
                 overflow: "hidden",
                 width: "100%",
@@ -140,22 +188,21 @@ const BookingFlow = () => {
   return (
     <AnimatePresence>
       {selectedDate !== null &&
-        (isMobile || isTablet ? (
-          <Modal isOpen={true} onClose={clearAll}>
-            {renderFlowContent()}
-          </Modal>
-        ) : (
+        (isDesktop ? (
           <motion.div
             ref={wrapperRef}
             className={styles.bookingFlow}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 50 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            onAnimationComplete={updatePanelAnchor}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
           >
-            {renderFlowContent()}
+            {renderDesktopFlowContent()}
           </motion.div>
+        ) : (
+          <Modal isOpen={true} onClose={clearAll}>
+            {renderMobileFlowContent()}
+          </Modal>
         ))}
     </AnimatePresence>
   );
